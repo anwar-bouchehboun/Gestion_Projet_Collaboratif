@@ -28,7 +28,7 @@
       <artifactId>mysql-connector-j</artifactId>
       <version>9.0.0</version>
     </dependency>
-      <!-- Jakarta Servlet API -->
+      <!--    Jakarta Servlet API -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
