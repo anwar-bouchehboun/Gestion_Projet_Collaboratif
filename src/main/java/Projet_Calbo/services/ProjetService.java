@@ -1,4 +1,4 @@
-package Projet_Calbo.service;
+package Projet_Calbo.services;
 
 public class ProjetService {
 
