@@ -118,10 +118,7 @@
         color: white;
       }
 
-      .btn-edit:hover,
-      .btn-delete:hover {
-        color: white;
-      }
+  
 
       .status-todo {
         background-color: #fff5f5;
@@ -225,7 +222,7 @@
                          <input type="text" class="form-control " id="" placeholder="Entre Nom Equipe">
                      </div>
                  <div class="col-auto me-md-2">
-                 <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+                 <button type="submit" class="btn btn-primary mb-3">Ajouter Equipe</button>
                     </div>
                 </div>
             </form>
@@ -260,8 +257,13 @@
                                 <td>anwar.ali@example.com</td>
                                 <td>Admin</td>
                                 <td class="d-flex flex-row gap-1">
-                                    <button class="btn btn-primary">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                             <button class="btn btn-icon btn-edit me-1"  title="Modifier">
+                                                      <i class="bi bi-pencil"></i>
+                                             </button>
+                                                      <button class="btn btn-icon btn-delete"  title="Supprimer">
+                                                       <i class="bi bi-trash"></i>
+                                           </button>
+                                  
                                 </td>
                             </tr>
                             <tr>
@@ -270,8 +272,13 @@
                                 <td>john.smith@example.com</td>
                                 <td>User</td>
                                  <td class="d-flex flex-row gap-1">
-                                    <button class="btn btn-primary">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                      <button class="btn btn-icon btn-edit me-1" onclick="editTask(${task.id})" title="Modifier">
+                                                      <i class="bi bi-pencil"></i>
+                                             </button>
+                                                      <button class="btn btn-icon btn-delete" onclick="deleteTask(${task.id})" title="Supprimer">
+                                                       <i class="bi bi-trash"></i>
+                                           </button>
+                                  
                                 </td>
                             </tr>
                             <!-- Additional rows as needed -->

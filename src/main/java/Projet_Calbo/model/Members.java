@@ -1,41 +1,71 @@
 package Projet_Calbo.model;
 
 public class Members {
-	  private String nom;
-	    private String prenom;
-	    private String email;
-	    private Role role;
+	private Integer id;
+    private String nom;
+    private String prenom;
+    private String email;
+    private Role role;
+    private Equipe equipe;
 
-	    public String getNom() {
-	        return nom;
-	    }
+    // No-argument constructor
+    public Members() {
+    }
 
-	    public void setNom(String nom) {
-	        this.nom = nom;
-	    }
+    // Parameterized constructor with Equipe
+    public Members(String nom, String prenom, String email, Role role, Equipe equipe) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = role;
+        this.equipe = equipe;
+    }
 
-	    public String getPrenom() {
-	        return prenom;
-	    }
+    // Getters and Setters
+    public Integer getId() {
+        return id;
+    }
 
-	    public void setPrenom(String prenom) {
-	        this.prenom = prenom;
-	    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getNom() {
+        return nom;
+    }
 
-	    public String getEmail() {
-	        return email;
-	    }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	    public void setEmail(String email) {
-	        this.email = email;
-	    }
+    public String getPrenom() {
+        return prenom;
+    }
 
-	    public Role getRole() {
-	        return role;
-	    }
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
-	    public void setRole(Role role) {
-	        this.role = role;
-	    }
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Equipe getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
 }
