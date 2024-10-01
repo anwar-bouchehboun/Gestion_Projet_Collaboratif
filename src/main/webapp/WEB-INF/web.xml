@@ -9,4 +9,12 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <servlet-name>TacheServlet</servlet-name>
+    <servlet-class>Projet_Calbo.controller.TacheServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TacheServlet</servlet-name>
+    <url-pattern>/tacheServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
