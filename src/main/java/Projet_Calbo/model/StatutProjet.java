@@ -1,5 +1,5 @@
 package Projet_Calbo.model;
 
-public class Projet {
+public enum StatutProjet {
 
 }
