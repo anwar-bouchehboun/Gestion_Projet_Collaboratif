@@ -10,7 +10,7 @@ public class DatabaseConnection {
 
     private String DB_URL = "jdbc:mysql://localhost:3306/collaboratif"; 
     private String USER = "root"; 
-    private String PASS = "";  
+    private String PASS = "15987463";  
 
  
 

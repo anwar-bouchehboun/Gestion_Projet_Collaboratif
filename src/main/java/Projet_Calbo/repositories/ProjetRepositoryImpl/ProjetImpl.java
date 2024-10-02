@@ -23,15 +23,15 @@ public class ProjetImpl implements GeneralInterface<Projet> {
             statement.setString(2, entity.getDescription());
             statement.setDate(3, Date.valueOf(entity.getDateDebut()));
             statement.setDate(4, entity.getDateFin() != null ? Date.valueOf(entity.getDateFin()) : null);
-            statement.setObject(5, entity.getStatut().name());
-            statement.setInt(6, entity.getEquipe().getId());
-
-            int rowsInserted = statement.executeUpdate();
-            return rowsInserted > 0;
+            statement.setObject(5, entity.getStatut() != null ? entity.getStatut().name() : null);
+            statement.setObject(6, entity.getEquipe() != null ? entity.getEquipe().getId() : null);
+            
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
         } catch (SQLException e) {
-            System.out.println("Erreur dans la création d'un projet: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
