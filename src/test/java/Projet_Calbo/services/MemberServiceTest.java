@@ -22,19 +22,21 @@ public class MemberServiceTest {
 
 	@Test
 	public void testGetAll() {
+		//fetch data
 		List<Members> membersList = memberService.getAll();
 		 membersList.stream().forEach(System.out::println);
 	}
 
 	@Test
 	public void testSaveEquipe() {
+		//create 
 		Members member;
 		Equipe e;
 		member = new Members();
 		e = new Equipe();
 		member.setNom("yassir");
 		member.setPrenom("bouchehboun");
-		member.setEmail("a.aer@gmail.com");
+		member.setEmail("a.a@gmail.com");
 		member.setRole(Role.DEVELOPPEUR);
 		e.setId(2);
 		member.setEquipe(e);
@@ -43,6 +45,7 @@ public class MemberServiceTest {
 
 	@Test
 	public void testDeleteEquipe() {
+		//delete data
 		  Members member = new Members();
 		    member.setId(6);
 		    memberService.deleteEquipe(member);
@@ -50,6 +53,7 @@ public class MemberServiceTest {
 
 	@Test
 	public void testUpdateEquipe() {
+		//update data 
 		   Members member = new Members();
 		    member.setId(10);
 		    member.setNom("anwar");
