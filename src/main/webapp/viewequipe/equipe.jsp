@@ -118,8 +118,7 @@
         color: white;
       }
 
-  
-
+ 
       .status-todo {
         background-color: #fff5f5;
       }
