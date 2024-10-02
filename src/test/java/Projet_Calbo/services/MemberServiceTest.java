@@ -1,5 +1,9 @@
+<<<<<<< HEAD:src/test/java/Projet_Calbo/services/MemberServiceTest.java
 package Projet_Calbo.services;
 
+=======
+package Projet_Calbo.repositories.ProjetRepositoryImpl;
+>>>>>>> 10a518f049d9c32be4040eaec055cdcc7740b1d6:src/test/java/Projet_Calbo/repositories/ProjetRepositoryImpl/MemberImpTest.java
 
 import java.util.List;
 
