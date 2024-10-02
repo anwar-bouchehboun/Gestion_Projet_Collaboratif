@@ -1,7 +1,9 @@
 package Projet_Calbo.repositories.ProjetRepositoryImpl;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import Projet_Calbo.config.DatabaseConnection;
@@ -15,13 +17,13 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	    String sql = "INSERT INTO equipe (nom) VALUES (?)";
 	    
 	    try (
-	        PreparedStatement statement = DatabaseConnection.getInstance().prepareStatement(sql)) { 
+	        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) { 
 	        
 	        statement.setString(1, entity.getNom());
 	        
 	        int rowsInserted = statement.executeUpdate();
 	        if (rowsInserted > 0) {
-	            return true; // Success
+	            return true; 
 	        }
 	    } catch (SQLException e) {
 	        System.out.println("Error inserting team: " + e.getMessage());
@@ -30,29 +32,96 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	}
 
 
+
 	@Override
 	public void update(Equipe entity) {
-		// TODO Auto-generated method stub
-		
+	    String sql = "UPDATE equipe SET nom = ? WHERE id = ?";
+	    
+	    try (
+	        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+	        
+	        statement.setString(1, entity.getNom());
+	        statement.setInt(2, entity.getId());
+	        
+	        int rowsUpdated = statement.executeUpdate();
+	        if (rowsUpdated > 0) {
+	            System.out.println("Team updated successfully.");
+	        } else {
+	            System.out.println("No team found with the given ID.");
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error updating team: " + e.getMessage());
+	    }
 	}
 
 	@Override
 	public void delete(Equipe entity) {
-		// TODO Auto-generated method stub
-		
+	    String sql = "DELETE FROM equipe WHERE id = ?";
+	    
+	    try (
+	        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+	        
+	        statement.setInt(1, entity.getId());
+	        
+	        int rowsDeleted = statement.executeUpdate();
+	        if (rowsDeleted > 0) {
+	            System.out.println("Team deleted successfully.");
+	        } else {
+	            System.out.println("No team found with the given ID.");
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error deleting team: " + e.getMessage());
+	    }
 	}
+
 
 	@Override
 	public List<Equipe> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	    List<Equipe> equipes = new ArrayList<>();
+	    String sql = "SELECT * FROM equipe";
+	    
+	    try (
+	        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+	        ResultSet resultSet = statement.executeQuery()) {
+	        
+	        while (resultSet.next()) {
+	            Equipe equipe = new Equipe();
+	            equipe.setId(resultSet.getInt("id"));
+	            equipe.setNom(resultSet.getString("nom"));
+	            equipes.add(equipe);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error retrieving teams: " + e.getMessage());
+	    }
+	    
+	    return equipes;
 	}
+
 
 	@Override
 	public Equipe findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	    String sql = "SELECT * FROM equipe WHERE id = ?";
+	    Equipe equipe = null;
+	    
+	    try (
+	        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+	        
+	        statement.setInt(1, id);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                equipe = new Equipe();
+	                equipe.setId(resultSet.getInt("id"));
+	                equipe.setNom(resultSet.getString("nom"));
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error finding team by ID: " + e.getMessage());
+	    }
+	    
+	    return equipe;
 	}
+
 
 	
 
