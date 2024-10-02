@@ -5,18 +5,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestion des Equipe</title>
-    <!-- Bootstrap 5.3.2 CSS -->
+    <title>Gestion des Projets</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Bootstrap Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
@@ -53,6 +50,8 @@
         letter-spacing: 1px;
         padding: 1.25rem;
         border-bottom: none;
+        display:flex;
+        justify-content:space-between;
       }
 
       .table {
@@ -118,7 +117,8 @@
         color: white;
       }
 
- 
+  
+
       .status-todo {
         background-color: #fff5f5;
       }
@@ -211,50 +211,60 @@
 
   <body>
   <div class="container">
-        <h2 class="text-center mb-4">Gestion des Equipes</h2>
+        <h2 class="text-center mb-4">Gestion des Projets</h2>
 
-        <!-- Create New Team Form -->
-        <div class="mb-0">
+        
+
+        <div class="text-end mb-3">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <i class="bi bi-plus-circle"></i> Créer un nouveau Projet
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-header flex "><h4>Liste des Projets</h4>
+            
+            <div class="mb-0">
             <form action="">
-                <div class="d-flex flex-column flex-md-row mb-3">
+                <div class="d-flex  flex-md-row ">
                    <div class="col-auto me-md-2 mb-2 mb-md-0">
-                         <input type="text" class="form-control " id="" placeholder="Entre Nom Equipe">
+                         <input type="text" class="form-control " id="" placeholder="Entre Nom Projet">
                      </div>
                  <div class="col-auto me-md-2">
-                 <button type="submit" class="btn btn-primary mb-3">Ajouter Equipe</button>
+                 <button type="submit" class="btn btn-primary mb-3">chercher</button>
                     </div>
                 </div>
             </form>
         </div>
-
-        <!-- Create New Member Button -->
-        <div class="text-end mb-3">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
-                <i class="bi bi-plus-circle"></i> Créer un nouvelle Membre
-            </button>
-        </div>
-
-        <!-- Members List -->
-        <div class="card">
-            <div class="card-header">Liste des Membres</div>
+            </div>
+            
+            
+            
+            
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-light">
                         <thead>
                             <tr>
                                 <th scope="col">Nom</th>
-                                <th scope="col">Prenom</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Role</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Statut</th>
+                                <th scope="col">Date de création</th>
+                                <th scope="col">Date d'échance</th>
+                                <th scope="col">Membres</th>
+                                <th scope="col">Taches</th>                                
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="taskTableBody">
                             <tr>
-                                <td>ANWAR</td>
-                                <td>Ali</td>
-                                <td>anwar.ali@example.com</td>
-                                <td>Admin</td>
+                                <td>Projet</td>
+                                <td>projet</td>
+                                <td>En cours</td>
+                                <td>20/10/2020</td>
+                                <td>20/10/2020</td>                         
+                                <td>20</td>
+                                <td>20</td>
                                 <td class="d-flex flex-row gap-1">
                                              <button class="btn btn-icon btn-edit me-1"  title="Modifier">
                                                       <i class="bi bi-pencil"></i>
@@ -266,10 +276,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>SMITH</td>
-                                <td>John</td>
-                                <td>john.smith@example.com</td>
-                                <td>User</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>Terminé</td>
+                                <td>20/10/2020</td>
+                                <td>20/10/2020</td>                         
+                                <td>20</td>
+                                <td>20</td>
                                  <td class="d-flex flex-row gap-1">
                                       <button class="btn btn-icon btn-edit me-1" onclick="editTask(${task.id})" title="Modifier">
                                                       <i class="bi bi-pencil"></i>
@@ -280,7 +293,6 @@
                                   
                                 </td>
                             </tr>
-                            <!-- Additional rows as needed -->
                         </tbody>
                     </table>
                 </div>
@@ -297,50 +309,41 @@
         </nav>
     </div>
 
-    <!-- Modal for Create/Edit Member -->
     <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Créer/Modifier un Membre</h5>
+                    <h5 class="modal-title" id="taskModalLabel">Créer/Modifier un Projet</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="Memberform">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                    <form id="Projetform">
+                            <div class="mb-4">
                                 <label for="Nom" class="form-label">Nom</label>
                                 <input type="text" class="form-control" name="nom" id="Nom" required />
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="Prenom" class="form-label">Prenom</label>
-                                <input type="text" class="form-control" name="prenom" id="Prenom" required />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="Email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" id="Email" required />
-                            </div>
-                                    <div class="col-md-6 mb-3">
-                  <label for="Equipe" class="form-label">Équipe</label>
-                  <select
-                    class="form-select"
-                    id="Equipe"
-                    name="equipe"
-                    required                  >
-                    <option value="">Sélectionner une équipe</option>
-                    <!-- Team options will be dynamically added here -->
-                  </select>
-                </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="Role" class="form-label">Role</label>
+                    <div class="mb-4">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" name="description" id="description" required></textarea>
+                    </div>
+                            
+                            <div class="mb-4">
+                                <label for="Role" class="form-label">Statut</label>
                                 <select class="form-select" id="Role" name="role" required>
-                                    <option value="">Sélectionner un rôle</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="User">User</option>
-                                    <option value="Editor">Editor</option>
+                                    <option value="">Sélectionner un statut</option>
+                                    <option value="Admin">En cours</option>
+                                    <option value="User">Terminée</option>
+                                    <option value="Editor">Annulé</option>
                                 </select>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Nom" class="form-label">Date de création</label>
+                                <input type="date" class="form-control" name="nom" id="Nom" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Prenom" class="form-label">Date D'échance</label>
+                                <input type="date" class="form-control" name="prenom" id="Prenom" required />
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -352,7 +355,6 @@
         </div>
     </div>
 
-    <!-- Modal for Delete Confirmation -->
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -361,7 +363,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Êtes-vous sûr de vouloir supprimer cette tâche ?
+                    Êtes-vous sûr de vouloir supprimer ce Projet ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
