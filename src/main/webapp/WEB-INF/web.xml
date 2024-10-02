@@ -14,5 +14,12 @@
     <servlet-name>EquipeServlet</servlet-name>
     <url-pattern>/equipe</url-pattern>
 </servlet-mapping>
- 
+ <servlet>
+    <servlet-name>TacheServlet</servlet-name>
+    <servlet-class>Projet_Calbo.controller.TacheServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>TacheServlet</servlet-name>
+    <url-pattern>/tache/*</url-pattern>
+</servlet-mapping>
 </web-app>

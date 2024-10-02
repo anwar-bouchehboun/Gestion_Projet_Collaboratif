@@ -1,5 +1,38 @@
 package Projet_Calbo.services;
 
-public class TacheService {
+import java.util.List;
 
+import Projet_Calbo.model.Tache;
+import Projet_Calbo.repositories.ProjetRepositoryImpl.TacheImpl;
+
+public class TacheService {
+    private TacheImpl tacheRepository;
+
+    public TacheService() {
+        this.tacheRepository = new TacheImpl();
+    }
+
+    public boolean addTache(Tache tache) {
+        return tacheRepository.save(tache);
+    }
+
+    public void updateTache(Tache tache) {
+        tacheRepository.update(tache);
+    }
+
+    public void deleteTache(Tache tache) {
+        tacheRepository.delete(tache);
+    }
+
+    public List<Tache> getAllTaches() {
+        return tacheRepository.getAll();
+    }
+
+    public Tache getTacheById(int id) {
+        return tacheRepository.findById(id);
+    }
+
+    public List<Tache> getTachesByProjet(int projetId) {
+        return tacheRepository.getTachesByProjet(projetId);
+    }
 }
