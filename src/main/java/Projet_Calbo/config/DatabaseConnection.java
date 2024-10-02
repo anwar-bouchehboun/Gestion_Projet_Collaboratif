@@ -4,25 +4,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 public class DatabaseConnection {
-
     private static DatabaseConnection instance;
-    private final Connection connection;
-    private static final String URL = "jdbc:mysql://localhost:3306/collaboratif";
-    private static final String USER = "mysql";
-    private static final String PASSWORD = "password";
+    private Connection connection;
 
-    private DatabaseConnection() {
+    private String url = "jdbc:mysql://localhost:3306/collaboratif"; 
+    private String username = "root"; 
+    private String password = "";  
+
+    private DatabaseConnection() throws SQLException {
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException("Erreur de connexion à la base de données", e);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            this.connection = DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver JDBC non trouvé.");
+            e.printStackTrace();
         }
     }
 
-    public static synchronized DatabaseConnection getInstance() {
+    public static DatabaseConnection getInstance() throws SQLException {
         if (instance == null) {
+            instance = new DatabaseConnection();
+        } else if (instance.getConnection().isClosed()) {
             instance = new DatabaseConnection();
         }
         return instance;
@@ -31,21 +34,19 @@ public class DatabaseConnection {
     public Connection getConnection() {
         return connection;
     }
-
-    public static void testConnection() {
-        DatabaseConnection dbConnection = getInstance();
-        Connection connection = dbConnection.getConnection();
-
-        try {
-            if (connection != null && !connection.isClosed()) {
-                System.out.println("Connexion à la base de données réussie.");
-            } else {
-                System.out.println("La connexion à la base de données est fermée ou a échoué.");
-            }
-        } catch (SQLException e) {
-            System.out.println("La connexion à la base de données est fermée ou a échoué.");
-
-        }
-    }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
