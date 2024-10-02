@@ -11,9 +11,7 @@ public class Projet {
 	private LocalDate dateFin ;
 	private Statut statut;
 	
-	public enum Statut {
-		ENPREPARATION, ENCOURS, ENPAUSE ,TERMINE ,ANNULE
-    }
+	
 	
 	
 	public Projet(int id , String nom ,String Description ,LocalDate dateDebut ,LocalDate dateFin, String description, Statut statut) {
