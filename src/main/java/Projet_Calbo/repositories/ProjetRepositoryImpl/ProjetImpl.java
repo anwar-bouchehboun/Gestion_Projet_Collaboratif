@@ -23,7 +23,7 @@ public class ProjetImpl implements GeneralInterface<Projet> {
             statement.setString(2, entity.getDescription());
             statement.setDate(3, Date.valueOf(entity.getDateDebut()));
             statement.setDate(4, entity.getDateFin() != null ? Date.valueOf(entity.getDateFin()) : null);
-            statement.setString(5, entity.getStatut().toString());
+            statement.setObject(5, entity.getStatut().name());
             statement.setInt(6, entity.getEquipe().getId());
 
             int rowsInserted = statement.executeUpdate();
@@ -42,7 +42,7 @@ public class ProjetImpl implements GeneralInterface<Projet> {
             statement.setString(2, entity.getDescription());
             statement.setDate(3, Date.valueOf(entity.getDateDebut()));
             statement.setDate(4, entity.getDateFin() != null ? Date.valueOf(entity.getDateFin()) : null);
-            statement.setString(5, entity.getStatut().toString());
+            statement.setObject(5, entity.getStatut().name());
             statement.setInt(6, entity.getEquipe().getId());
             statement.setInt(7, entity.getId());
 
@@ -117,8 +117,7 @@ public class ProjetImpl implements GeneralInterface<Projet> {
                 projet.setDescription(resultSet.getString("description"));
                 projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
                 projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
-                projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
-
+                projet.setStatut(StatutProjet.valueOf(resultSet.getNString("statut")));
                 Equipe equipe = new Equipe();
                 equipe.setId(resultSet.getInt("equipet_id"));
                 projet.setEquipe(equipe);

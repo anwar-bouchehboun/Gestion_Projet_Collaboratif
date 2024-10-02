@@ -12,7 +12,7 @@ import Projet_Calbo.config.DatabaseConnection;
 import Projet_Calbo.model.Members;
 import Projet_Calbo.model.PrioriteEnum;
 import Projet_Calbo.model.Projet;
-import Projet_Calbo.model.StatutEnum;
+import Projet_Calbo.model.Statut;
 import Projet_Calbo.model.Tache;
 import Projet_Calbo.repositories.GeneralInterface;
 
@@ -122,7 +122,7 @@ public class TacheImpl implements GeneralInterface<Tache> {
         tache.setTitre(resultSet.getString("titre"));
         tache.setDescription(resultSet.getString("description"));
         tache.setPriorite(PrioriteEnum.valueOf(resultSet.getString("priorite")));
-        tache.setStatut(StatutEnum.valueOf(resultSet.getString("statut")));
+        tache.setStatut(Statut.valueOf(resultSet.getString("statut")));
         tache.setDateCreation(resultSet.getDate("date_creation").toLocalDate());
         tache.setDateEcheance(resultSet.getDate("date_echeance").toLocalDate());
         

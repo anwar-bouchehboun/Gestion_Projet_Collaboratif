@@ -123,7 +123,7 @@ public class MemberImp implements GeneralInterface<Members> {
 
 	@Override
 	public Members findById(Integer id) {
-	    Members member = null; // Initialize member to null
+	    Members member = null; 
 	    String sql = "SELECT membre.id, membre.nom, membre.prenom, membre.email, membre.role, membre.equipe_id, equipe.nom AS equipe_nom " +
 	                 "FROM membre LEFT JOIN equipe ON membre.equipe_id = equipe.id WHERE membre.id = ?"; // Using LEFT JOIN to get the equipe info
 

@@ -7,7 +7,7 @@ public class Tache {
     private String titre;
     private String description;
     private PrioriteEnum priorite;
-    private StatutEnum statut;
+    private Statut statut;
     private LocalDate dateCreation;
     private LocalDate dateEcheance;
     private Projet projet;
@@ -15,7 +15,7 @@ public class Tache {
 
     public Tache() {}
 
-    public Tache(String titre, String description, PrioriteEnum priorite, StatutEnum statut, 
+    public Tache(String titre, String description, PrioriteEnum priorite, Statut statut, 
                  LocalDate dateCreation, LocalDate dateEcheance, Projet projet, Members membre) {
         this.titre = titre;
         this.description = description;
@@ -60,11 +60,11 @@ public class Tache {
         this.priorite = priorite;
     }
 
-    public StatutEnum getStatut() {
+    public Statut getStatut() {
         return statut;
     }
 
-    public void setStatut(StatutEnum statut) {
+    public void setStatut(Statut statut) {
         this.statut = statut;
     }
 

@@ -1,7 +1,6 @@
 package Projet_Calbo.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Projet {
 
@@ -11,7 +10,6 @@ public class Projet {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private StatutProjet statut;
-    private List<Tache> taches;
     private Equipe equipe;
 
     public Projet() {
@@ -63,7 +61,7 @@ public class Projet {
     }
 
     public void setDateFin(LocalDate dateFin) {
-        this.dateFin = dateFin;
+        this.dateFin = dateFin; 
     }
 
     public StatutProjet getStatut() {
@@ -74,19 +72,24 @@ public class Projet {
         this.statut = statut;
     }
 
-    public List<Tache> getTaches() {
-        return taches;
-    }
-
-    public void setTaches(List<Tache> taches) {
-        this.taches = taches;
-    }
-
     public Equipe getEquipe() {
         return equipe;
     }
 
     public void setEquipe(Equipe equipe) {
         this.equipe = equipe;
+    }
+
+    @Override
+    public String toString() {
+        return "Projet{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", description='" + description + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", statut=" + statut +
+                ", equipe=" + equipe +
+                '}';
     }
 }
