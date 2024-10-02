@@ -1,6 +1,6 @@
 package Projet_Calbo.repositories.ProjetRepositoryImpl;
 
-import static org.junit.Assert.*;
+
 
 import java.util.List;
 
