@@ -327,15 +327,25 @@
                             <textarea class="form-control" name="description" id="description" required></textarea>
                     </div>
                             
-                            <div class="mb-3">
-                                <label for="Role" class="form-label">Role</label>
+                            <div class="mb-4">
+                                <label for="Role" class="form-label">Statut</label>
                                 <select class="form-select" id="Role" name="role" required>
-                                    <option value="">Sélectionner un rôle</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="User">User</option>
-                                    <option value="Editor">Editor</option>
+                                    <option value="">Sélectionner un statut</option>
+                                    <option value="Admin">En cours</option>
+                                    <option value="User">Terminée</option>
+                                    <option value="Editor">Annulé</option>
                                 </select>
                             </div>
+                            <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Nom" class="form-label">Date de création</label>
+                                <input type="date" class="form-control" name="nom" id="Nom" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Prenom" class="form-label">Date D'échance</label>
+                                <input type="date" class="form-control" name="prenom" id="Prenom" required />
+                            </div>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" onclick="saveTask()">Enregistrer</button>
                         </div>
@@ -345,7 +355,6 @@
         </div>
     </div>
 
-    <!-- Modal for Delete Confirmation -->
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -354,7 +363,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Êtes-vous sûr de vouloir supprimer cette tâche ?
+                    Êtes-vous sûr de vouloir supprimer ce Projet ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
