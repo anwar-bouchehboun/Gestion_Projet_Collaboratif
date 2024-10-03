@@ -126,8 +126,7 @@ public class MemberImp implements GeneralInterface<Members> {
 	public Members findById(Integer id) {
 	    Members member = null; 
 	    String sql = "SELECT membre.id, membre.nom, membre.prenom, membre.email, membre.role, membre.equipe_id, equipe.nom AS equipe_nom " +
-	                 "FROM membre LEFT JOIN equipe ON membre.equipe_id = equipe.id WHERE membre.id = ?"; // Using LEFT JOIN to get the equipe info
-
+	                 "FROM membre LEFT JOIN equipe ON membre.equipe_id = equipe.id WHERE membre.id = ?"; 
 	    try (
 	        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
 	        
@@ -158,39 +157,42 @@ public class MemberImp implements GeneralInterface<Members> {
 	@Override
 	public List<Members> getPage(int page, int pageSize) {
 	    List<Members> membersList = new ArrayList<>();
-	    int offset = (page - 1) * pageSize;  // Calculate the offset for pagination
+	    int offset = (page - 1) * pageSize; // Calculate the offset for pagination
 	    String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.nom AS equipe_nom " +
 	                 "FROM membre JOIN equipe ON membre.equipe_id = equipe.id " +
-	                 "LIMIT ? OFFSET ?";  
+	                 "LIMIT ? OFFSET ?";
 
 	    try (
-	        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-	        
-	        statement.setInt(1, pageSize);  
-	        statement.setInt(2, offset);   
+		        PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+		        
+		        statement.setInt(1, pageSize);  
+		        statement.setInt(2, offset);   
 
-	        try (ResultSet resultSet = statement.executeQuery()) {
-	            while (resultSet.next()) {
-	                Members member = new Members();
-	                member.setId(resultSet.getInt("id"));
-	                member.setNom(resultSet.getString("membre_nom"));
-	                member.setPrenom(resultSet.getString("prenom"));
-	                member.setEmail(resultSet.getString("email"));
-	                member.setRole(Role.valueOf(resultSet.getString("role")));
+		        try (ResultSet resultSet = statement.executeQuery()) {
+		            while (resultSet.next()) {
+		                Members member = new Members();
+		                member.setId(resultSet.getInt("id"));
+		                member.setNom(resultSet.getString("membre_nom"));
+		                member.setPrenom(resultSet.getString("prenom"));
+		                member.setEmail(resultSet.getString("email"));
+		                member.setRole(Role.valueOf(resultSet.getString("role")));
 
-	                Equipe equipe = new Equipe();
-	                equipe.setNom(resultSet.getString("equipe_nom"));
-	                member.setEquipe(equipe);
+		                Equipe equipe = new Equipe();
+		                equipe.setNom(resultSet.getString("equipe_nom"));
+		                member.setEquipe(equipe);
 
-	                membersList.add(member);
-	            }
-	        }
-	    } catch (SQLException e) {
-	        LoggerMessage.error("Error retrieving paginated members: " + e.getMessage());
-	    }
+		                membersList.add(member);
+		            }
+		        }
+		    } catch (SQLException e) {
+		        LoggerMessage.error("Error retrieving paginated members: " + e.getMessage());
+		    }
 
-	    return membersList;
+	    
+	    return membersList; 
 	}
+
+
 
 	@Override
 	public long count() {
