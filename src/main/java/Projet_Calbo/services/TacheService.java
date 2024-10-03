@@ -35,4 +35,12 @@ public class TacheService {
     public List<Tache> getTachesByProjet(int projetId) {
         return tacheRepository.getTachesByProjet(projetId);
     }
+    public List<Tache> getTachePage(int page, int pageSize) {
+        return tacheRepository.getPage(page, pageSize);
+    }
+    
+    public int getTotalPages(int pageSize) {
+        long totalCount = tacheRepository.count();
+        return (int) Math.ceil((double) totalCount / pageSize);
+    }
 }
