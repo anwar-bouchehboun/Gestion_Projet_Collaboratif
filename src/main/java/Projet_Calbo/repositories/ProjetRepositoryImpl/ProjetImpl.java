@@ -77,7 +77,8 @@ public class ProjetImpl implements GeneralInterface<Projet> {
     @Override
     public List<Projet> getAll() {
         List<Projet> projets = new ArrayList<>();
-        String sql = "SELECT * FROM projet";
+        String sql = "SELECT p.*, e.nom AS equipe_nom, e.id AS equipe_id FROM projet p JOIN equipe e ON p.equipet_id = e.id";
+        
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery()) {
 
@@ -89,11 +90,18 @@ public class ProjetImpl implements GeneralInterface<Projet> {
                 projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
                 projet.setDateFin(
                         resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
-                projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
+
+                String statutStr = resultSet.getString("statut");
+                if (statutStr != null) {
+                    projet.setStatut(StatutProjet.valueOf(statutStr));
+                } else {
+                    projet.setStatut(null); 
+                }
 
                 Equipe equipe = new Equipe();
-                equipe.setId(resultSet.getInt("equipet_id"));
-                projet.setEquipe(equipe);
+                equipe.setId(resultSet.getInt("equipe_id")); 
+                equipe.setNom(resultSet.getString("equipe_nom")); 
+                projet.setEquipe(equipe); 
 
                 projets.add(projet);
             }
@@ -102,6 +110,7 @@ public class ProjetImpl implements GeneralInterface<Projet> {
         }
         return projets;
     }
+
 
     @Override
     public Projet findById(Integer id) {

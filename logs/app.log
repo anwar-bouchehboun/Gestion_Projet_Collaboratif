@@ -1,3 +1,12 @@
 2024-10-02 19:59:04 INFO  Projet_Calbo.utilis.LoggerMessage - MemberServiceTest setup complete.
 2024-10-03 09:12:49 INFO  Projet_Calbo.utilis.LoggerMessage - Team updated successfully.
 2024-10-03 09:12:49 WARN  Projet_Calbo.utilis.LoggerMessage - No team found with the given ID.
+2024-10-03 11:33:15 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
+2024-10-03 11:38:34 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
+2024-10-03 11:38:34 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
+2024-10-03 11:43:04 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
+2024-10-03 11:43:04 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
+2024-10-03 11:44:22 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
+2024-10-03 11:44:22 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
+2024-10-03 11:55:07 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
+2024-10-03 11:55:07 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.

@@ -1,7 +1,6 @@
 package Projet_Calbo.services;
 
 import java.util.List;
-
 import Projet_Calbo.model.Projet;
 import Projet_Calbo.repositories.ProjetRepositoryImpl.ProjetImpl;
 
@@ -13,7 +12,7 @@ public class ProjetService {
         this.projetRepository = new ProjetImpl();
     }
 
-    public boolean createProjet(Projet projet) {
+    public boolean saveProjet(Projet projet) { 
         return projetRepository.save(projet);
     }
 
