@@ -1,7 +1,7 @@
 package Projet_Calbo.model;
 
 public enum PrioriteEnum {
-    FAIBLE,
+    BASSE,
     MOYENNE,
-    ELEVEE
+    HAUTE
 }
