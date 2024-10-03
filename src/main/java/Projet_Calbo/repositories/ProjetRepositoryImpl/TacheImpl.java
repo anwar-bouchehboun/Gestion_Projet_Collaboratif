@@ -82,7 +82,7 @@ public class TacheImpl implements GeneralInterface<Tache> {
     @Override
     public List<Tache> getAll() {
         List<Tache> taches = new ArrayList<>();
-        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom FROM Tache t LEFT JOIN Projet p ON t.projet_id = p.id LEFT JOIN Membre m ON t.membre_id = m.id";
+        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom FROM Tache t JOIN Projet p ON t.projet_id = p.id JOIN Membre m ON t.membre_id = m.id";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -97,7 +97,7 @@ public class TacheImpl implements GeneralInterface<Tache> {
 
     @Override
     public Tache findById(Integer id) {
-        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom FROM Tache t LEFT JOIN Projet p ON t.projet_id = p.id LEFT JOIN Membre m ON t.membre_id = m.id WHERE t.id = ?";
+        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom FROM Tache t JOIN Projet p ON t.projet_id = p.id JOIN Membre m ON t.membre_id = m.id WHERE t.id = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -114,7 +114,7 @@ public class TacheImpl implements GeneralInterface<Tache> {
 
     public List<Tache> getTachesByProjet(int projetId) {
         List<Tache> taches = new ArrayList<>();
-        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom FROM Tache t LEFT JOIN Projet p ON t.projet_id = p.id LEFT JOIN Membre m ON t.membre_id = m.id WHERE t.projet_id = ?";
+        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom FROM Tache t JOIN Projet p ON t.projet_id = p.id JOIN Membre m ON t.membre_id = m.id WHERE t.projet_id = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, projetId);
