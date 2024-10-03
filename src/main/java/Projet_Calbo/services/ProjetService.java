@@ -28,7 +28,7 @@ public class ProjetService {
         return projetRepository.getAll();
     }
 
-    public Projet findProjetById(int id) {
-        return projetRepository.findById(id);
+    public Projet getById(int id) {
+        return projetRepository.findById(id); 
     }
 }
