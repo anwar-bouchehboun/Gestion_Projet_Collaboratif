@@ -10,3 +10,17 @@
 2024-10-03 11:44:22 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
 2024-10-03 11:55:07 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
 2024-10-03 11:55:07 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
+2024-10-03 14:08:48 DEBUG Projet_Calbo.utilis.LoggerMessage - Failed to connect to the database: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:48 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:48 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:48 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:48 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:48 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:55 DEBUG Projet_Calbo.utilis.LoggerMessage - Failed to connect to the database: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:55 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:55 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:55 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:55 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 14:08:56 ERROR Projet_Calbo.utilis.LoggerMessage - Failed to re-establish the database connection: Access denied for user 'root'@'localhost' (using password: NO)
+2024-10-03 16:07:12 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
+2024-10-03 16:07:16 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.

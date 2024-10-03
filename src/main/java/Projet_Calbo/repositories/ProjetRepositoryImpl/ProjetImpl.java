@@ -12,12 +12,13 @@ import Projet_Calbo.model.Equipe;
 import Projet_Calbo.model.Projet;
 import Projet_Calbo.model.StatutProjet;
 import Projet_Calbo.repositories.GeneralInterface;
+import Projet_Calbo.repositories.MultiInterface;
 
-public class ProjetImpl implements GeneralInterface<Projet> {
+public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Projet> {
 
     @Override
     public boolean save(Projet entity) {
-        String sql = "INSERT INTO projet (nom, description, dateDebut, dateFin, statut, equipet_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Projet (nom, description, dateDebut, dateFin, statut, equipe_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
             statement.setString(1, entity.getNom());
             statement.setString(2, entity.getDescription());
@@ -36,7 +37,7 @@ public class ProjetImpl implements GeneralInterface<Projet> {
 
     @Override
     public void update(Projet entity) {
-        String sql = "UPDATE projet SET nom = ?, description = ?, dateDebut = ?, dateFin = ?, statut = ?, equipet_id = ? WHERE id = ?";
+        String sql = "UPDATE Projet SET nom = ?, description = ?, dateDebut = ?, dateFin = ?, statut = ?, equipe_id = ? WHERE id = ?";
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
             statement.setString(1, entity.getNom());
             statement.setString(2, entity.getDescription());
@@ -77,7 +78,7 @@ public class ProjetImpl implements GeneralInterface<Projet> {
     @Override
     public List<Projet> getAll() {
         List<Projet> projets = new ArrayList<>();
-        String sql = "SELECT p.*, e.nom AS equipe_nom, e.id AS equipe_id FROM projet p JOIN equipe e ON p.equipet_id = e.id";
+        String sql = "SELECT p.*, e.nom AS equipe_nom FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id";
         
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery()) {
@@ -98,10 +99,14 @@ public class ProjetImpl implements GeneralInterface<Projet> {
                     projet.setStatut(null); 
                 }
 
-                Equipe equipe = new Equipe();
-                equipe.setId(resultSet.getInt("equipe_id")); 
-                equipe.setNom(resultSet.getString("equipe_nom")); 
-                projet.setEquipe(equipe); 
+                if (resultSet.getObject("equipe_id") != null) {
+                    Equipe equipe = new Equipe();
+                    equipe.setId(resultSet.getInt("equipe_id")); 
+                    equipe.setNom(resultSet.getString("equipe_nom")); 
+                    projet.setEquipe(equipe); 
+                } else {
+                    projet.setEquipe(null);
+                }
 
                 projets.add(projet);
             }
@@ -142,7 +147,7 @@ public class ProjetImpl implements GeneralInterface<Projet> {
     @Override
     public List<Projet> getPage(int page, int pageSize) {
         List<Projet> projets = new ArrayList<>();
-        String sql = "SELECT * FROM projet LIMIT ? OFFSET ?";
+        String sql = "SELECT p.*, e.nom AS equipe_nom FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id LIMIT ? OFFSET ?";
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
             statement.setInt(1, pageSize);
             statement.setInt(2, (page - 1) * pageSize);
@@ -157,11 +162,11 @@ public class ProjetImpl implements GeneralInterface<Projet> {
                     projet.setDateFin(
                             resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
                     projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
-
+            
                     Equipe equipe = new Equipe();
-                    equipe.setId(resultSet.getInt("equipet_id"));
+                    equipe.setId(resultSet.getInt("equipe_id"));
                     projet.setEquipe(equipe);
-
+            
                     projets.add(projet);
                 }
             }
