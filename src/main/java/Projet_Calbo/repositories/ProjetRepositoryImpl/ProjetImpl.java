@@ -1,9 +1,9 @@
 package Projet_Calbo.repositories.ProjetRepositoryImpl;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,9 +131,8 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                 projet.setNom(resultSet.getString("nom"));
                 projet.setDescription(resultSet.getString("description"));
                 projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
-                projet.setDateFin(
-                        resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
-                projet.setStatut(StatutProjet.valueOf(resultSet.getNString("statut")));
+                projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
+                projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
                 Equipe equipe = new Equipe();
                 equipe.setId(resultSet.getInt("equipet_id"));
                 projet.setEquipe(equipe);
@@ -143,6 +142,7 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         }
         return projet;
     }
+
 
     @Override
     public List<Projet> getPage(int page, int pageSize) {
