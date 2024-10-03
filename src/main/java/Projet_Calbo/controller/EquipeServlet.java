@@ -25,7 +25,7 @@ public class EquipeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/viewequipe/equipe.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/equipe.jsp");
 		dispatcher.forward(request, response);
 		}
 

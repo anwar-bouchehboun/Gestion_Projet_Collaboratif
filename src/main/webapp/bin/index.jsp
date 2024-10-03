@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<p>hello</p>
-<p></p>
-<h1>word</h1>
-</body>
-</html>
+pageEncoding="UTF-8" %> 
+
+<% request.setAttribute("title", "../content/index.jsp"); %>
+
+<jsp:include page="./views/layout/layout.jsp" />
