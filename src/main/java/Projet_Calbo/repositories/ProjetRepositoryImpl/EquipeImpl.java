@@ -164,6 +164,5 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 		
 		return count;
 	}
-	
 
 }

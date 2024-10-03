@@ -154,8 +154,6 @@ public class MemberImp implements GeneralInterface<Members> {
 	}
 
 	
-	@Override
-	public List<Members> getPage(int page, int pageSize) {
 	    List<Members> membersList = new ArrayList<>();
 	    int offset = (page - 1) * pageSize; // Calculate the offset for pagination
 	    String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.nom AS equipe_nom " +
