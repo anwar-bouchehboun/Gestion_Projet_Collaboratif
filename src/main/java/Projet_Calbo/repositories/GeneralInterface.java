@@ -8,6 +8,5 @@ public interface GeneralInterface<T> {
 	void delete(T entity);
 	List<T> getAll();
 	T findById(Integer id);
-	List<T> getPage(int page, int pageSize);
-	long count();
+	
 }

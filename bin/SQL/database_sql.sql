@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Membre (
     nom VARCHAR(50) NOT NULL,
     prenom VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    role ENUM('CHEFPROJET', 'DEVELOPPEUR', 'DESIGNER') NOT NULL,
+    role ENUM('CHEF_DE_PROJET', 'DEVELOPPEUR', 'DESIGNER') NOT NULL,
     UNIQUE KEY uk_membre_email (email),
     equipe_id INT,
     FOREIGN KEY (equipe_id) REFERENCES Equipe(id) ON DELETE CASCADE
@@ -56,7 +56,7 @@ INSERT INTO Projet (nom, description, dateDebut, dateFin, statut, equipe_id) VAL
 ('Projet Beta', 'Description du Projet Beta', '2024-03-01', '2024-09-30', 'TERMINE', 2);
 
 INSERT INTO Membre (nom, prenom, email, role, equipe_id) VALUES 
-('Dupont', 'Alice', 'alice.dupont@example.com', 'CHEFPROJET', 1),
+('Dupont', 'Alice', 'alice.dupont@example.com', 'CHEF_DE_PROJET', 1),
 ('Martin', 'Bob', 'bob.martin@example.com', 'DEVELOPPEUR', 1),
 ('Leroy', 'Clara', 'clara.leroy@example.com', 'DESIGNER', 1);
 

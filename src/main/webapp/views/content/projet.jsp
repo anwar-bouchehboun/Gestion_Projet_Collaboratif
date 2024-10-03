@@ -8,7 +8,7 @@
 
         <div class="text-end mb-3">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
-                <i class="bi bi-plus-circle"></i> Créer un nouveau Projet
+                <i class="bi bi-plus-circle"></i> Crï¿½er un nouveau Projet
             </button>
         </div>
 
@@ -40,8 +40,8 @@
                                 <th scope="col">Nom</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Statut</th>
-                                <th scope="col">Date de création</th>
-                                <th scope="col">Date d'échance</th>
+                                <th scope="col">Date de crï¿½ation</th>
+                                <th scope="col">Date d'ï¿½chance</th>
                                 <th scope="col">Membres</th>
                                 <th scope="col">Taches</th>                                
                                 <th scope="col">Actions</th>
@@ -69,7 +69,7 @@
                             <tr>
                                 <td>test</td>
                                 <td>test</td>
-                                <td>Terminé</td>
+                                <td>Terminï¿½</td>
                                 <td>20/10/2020</td>
                                 <td>20/10/2020</td>                         
                                 <td>20</td>
@@ -104,7 +104,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Créer/Modifier un Projet</h5>
+                    <h5 class="modal-title" id="taskModalLabel">Crï¿½er/Modifier un Projet</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -121,19 +121,19 @@
                             <div class="mb-4">
                                 <label for="Role" class="form-label">Statut</label>
                                 <select class="form-select" id="Role" name="role" required>
-                                    <option value="">Sélectionner un statut</option>
+                                    <option value="">Sï¿½lectionner un statut</option>
                                     <option value="Admin">En cours</option>
-                                    <option value="User">Terminée</option>
-                                    <option value="Editor">Annulé</option>
+                                    <option value="User">Terminï¿½e</option>
+                                    <option value="Editor">Annulï¿½</option>
                                 </select>
                             </div>
                             <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="Nom" class="form-label">Date de création</label>
+                                <label for="Nom" class="form-label">Date de crï¿½ation</label>
                                 <input type="date" class="form-control" name="nom" id="Nom" required />
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="Prenom" class="form-label">Date D'échance</label>
+                                <label for="Prenom" class="form-label">Date D'ï¿½chance</label>
                                 <input type="date" class="form-control" name="prenom" id="Prenom" required />
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Êtes-vous sûr de vouloir supprimer ce Projet ?
+                    ï¿½tes-vous sï¿½r de vouloir supprimer ce Projet ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

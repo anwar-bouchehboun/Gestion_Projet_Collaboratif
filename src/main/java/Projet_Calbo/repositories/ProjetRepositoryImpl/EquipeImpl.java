@@ -8,11 +8,10 @@ import java.util.List;
 
 import Projet_Calbo.config.DatabaseConnection;
 import Projet_Calbo.model.Equipe;
-import Projet_Calbo.model.Members;
 import Projet_Calbo.repositories.GeneralInterface;
+import Projet_Calbo.repositories.MultiInterface;
 import Projet_Calbo.utilis.LoggerMessage;
-
-public class EquipeImpl implements GeneralInterface<Equipe>  {
+public class EquipeImpl implements GeneralInterface<Equipe> , MultiInterface<Equipe> {
 
 	@Override
 	public boolean save(Equipe entity) {

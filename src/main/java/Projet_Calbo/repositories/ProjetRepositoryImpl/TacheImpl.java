@@ -21,8 +21,9 @@ import Projet_Calbo.model.Role;
 import Projet_Calbo.model.Statut;
 import Projet_Calbo.model.Tache;
 import Projet_Calbo.repositories.GeneralInterface;
+import Projet_Calbo.repositories.MultiInterface;
 
-public class TacheImpl implements GeneralInterface<Tache> {
+public class TacheImpl implements GeneralInterface<Tache>, MultiInterface<Tache> {
     private static final Logger LOGGER = Logger.getLogger(TacheImpl.class.getName());
 
     @Override
@@ -208,9 +209,9 @@ public class TacheImpl implements GeneralInterface<Tache> {
     public List<Members> getMembersForProject(int projectId) {
         List<Members> members = new ArrayList<>();
         String sql = "SELECT m.* FROM Membre m " +
-                     "JOIN Projet p ON m.equipe_id = p.equipe_id " +
-                     "WHERE p.id = ?";
-    
+                "JOIN Projet p ON m.equipe_id = p.equipe_id " +
+                "WHERE p.id = ?";
+
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, projectId);
@@ -231,17 +232,17 @@ public class TacheImpl implements GeneralInterface<Tache> {
         return members;
     }
 
-    public List<Tache> getTasksForMember(int memberId, int projectId) {
+    public List<Tache> getTasksForMember(Members member, Projet projet) {
         List<Tache> tasks = new ArrayList<>();
         String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom " +
-                     "FROM Tache t " +
-                     "JOIN Projet p ON t.projet_id = p.id " +
-                     "JOIN Membre m ON t.membre_id = m.id " +
-                     "WHERE t.membre_id = ? AND t.projet_id = ?";
+                "FROM Tache t " +
+                "JOIN Projet p ON t.projet_id = p.id " +
+                "JOIN Membre m ON t.membre_id = m.id " +
+                "WHERE t.membre_id = ? AND t.projet_id = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, memberId);
-            pstmt.setInt(2, projectId);
+            pstmt.setInt(1, member.getId());
+            pstmt.setInt(2, projet.getId());
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     tasks.add(extractTacheFromResultSet(rs));
@@ -252,15 +253,16 @@ public class TacheImpl implements GeneralInterface<Tache> {
         }
         return tasks;
     }
-    public Map<Members, List<Tache>> getMembersAndTasksForProject(int projectId) {
+
+    public Map<Members, List<Tache>> getMembersAndTasksForProject(Projet projet) {
         Map<Members, List<Tache>> memberTaskMap = new HashMap<>();
-        List<Members> members = getMembersForProject(projectId);
-    
+        List<Members> members = getMembersForProject(projet.getId());
+
         for (Members member : members) {
-            List<Tache> tasks = getTasksForMember(member.getId(), projectId);
+            List<Tache> tasks = getTasksForMember(member, projet);
             memberTaskMap.put(member, tasks);
         }
-    
+
         return memberTaskMap;
     }
 
