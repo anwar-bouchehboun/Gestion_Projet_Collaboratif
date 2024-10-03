@@ -1,18 +1,26 @@
 package Projet_Calbo.repositories.ProjetRepositoryImpl;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Projet_Calbo.config.DatabaseConnection;
-import Projet_Calbo.model.Tache;
-import Projet_Calbo.model.Projet;
 import Projet_Calbo.model.Members;
 import Projet_Calbo.model.PrioriteEnum;
+import Projet_Calbo.model.Projet;
+import Projet_Calbo.model.Role;
 import Projet_Calbo.model.Statut;
+import Projet_Calbo.model.Tache;
 import Projet_Calbo.repositories.GeneralInterface;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class TacheImpl implements GeneralInterface<Tache> {
     private static final Logger LOGGER = Logger.getLogger(TacheImpl.class.getName());
@@ -196,4 +204,64 @@ public class TacheImpl implements GeneralInterface<Tache> {
         }
         return 0;
     }
+
+    public List<Members> getMembersForProject(int projectId) {
+        List<Members> members = new ArrayList<>();
+        String sql = "SELECT m.* FROM Membre m " +
+                     "JOIN Projet p ON m.equipe_id = p.equipe_id " +
+                     "WHERE p.id = ?";
+    
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Members member = new Members();
+                    member.setId(rs.getInt("id"));
+                    member.setNom(rs.getString("nom"));
+                    member.setPrenom(rs.getString("prenom"));
+                    member.setEmail(rs.getString("email"));
+                    member.setRole(Role.valueOf(rs.getString("role")));
+                    members.add(member);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error retrieving members for project", e);
+        }
+        return members;
+    }
+
+    public List<Tache> getTasksForMember(int memberId, int projectId) {
+        List<Tache> tasks = new ArrayList<>();
+        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom " +
+                     "FROM Tache t " +
+                     "JOIN Projet p ON t.projet_id = p.id " +
+                     "JOIN Membre m ON t.membre_id = m.id " +
+                     "WHERE t.membre_id = ? AND t.projet_id = ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, memberId);
+            pstmt.setInt(2, projectId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    tasks.add(extractTacheFromResultSet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error retrieving tasks for member and project", e);
+        }
+        return tasks;
+    }
+    public Map<Members, List<Tache>> getMembersAndTasksForProject(int projectId) {
+        Map<Members, List<Tache>> memberTaskMap = new HashMap<>();
+        List<Members> members = getMembersForProject(projectId);
+    
+        for (Members member : members) {
+            List<Tache> tasks = getTasksForMember(member.getId(), projectId);
+            memberTaskMap.put(member, tasks);
+        }
+    
+        return memberTaskMap;
+    }
+
 }

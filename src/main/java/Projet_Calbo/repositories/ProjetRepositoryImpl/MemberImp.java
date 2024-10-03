@@ -155,6 +155,48 @@ public class MemberImp implements GeneralInterface<Members> {
 	}
 
 	
+	@Override
+	public List<Members> getPage(int page, int pageSize) {
+		List<Members> members = new ArrayList<>();
+		String sql = "SELECT * FROM membre LIMIT ? OFFSET ?";
+		
+		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+			statement.setInt(1, pageSize);
+			statement.setInt(2, (page - 1) * pageSize);
+			
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					Members member = new Members();
+					member.setId(resultSet.getInt("id"));
+					member.setNom(resultSet.getString("nom"));
+					member.setPrenom(resultSet.getString("prenom"));
+					member.setEmail(resultSet.getString("email"));
+					member.setRole(Role.valueOf(resultSet.getString("role")));
+					members.add(member);
+				}
+			}
+		} catch (SQLException e) {
+			LoggerMessage.error("Error retrieving page of teams: " + e.getMessage());
+		}
+		
+		return members;
+	}
 	
+	@Override
+	public long count() {
+		String sql = "SELECT COUNT(*) FROM membre";
+		long count = 0;
+		
+		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+			 ResultSet resultSet = statement.executeQuery()) {
+			if (resultSet.next()) {
+				count = resultSet.getLong(1);
+			}
+		} catch (SQLException e) {
+			LoggerMessage.error("Error counting members: " + e.getMessage());
+		}
+		
+		return count;
+	}	
 
 }

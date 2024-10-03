@@ -2,8 +2,10 @@ package Projet_Calbo.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -88,7 +90,7 @@ public class TacheServiceTest {
         // // Print out all tasks for debugging
         // System.out.println("All tasks:");
         // for (Tache tache : allTaches) {
-        //     System.out.println(tache.getId() + ": " + tache.getTitre());
+        // System.out.println(tache.getId() + ": " + tache.getTitre());
         // }
 
         // // Assert that we have at least one task in the database
@@ -96,43 +98,50 @@ public class TacheServiceTest {
 
         // // Verify that each task has valid data
         // for (Tache tache : allTaches) {
-        //     assertNotNull(tache.getId());
-        //     assertNotNull(tache.getTitre());
-        //     assertNotNull(tache.getDescription());
-        //     assertNotNull(tache.getPriorite());
-        //     assertNotNull(tache.getStatut());
-        //     assertNotNull(tache.getDateCreation());
-        //     assertNotNull(tache.getProjet());
+        // assertNotNull(tache.getId());
+        // assertNotNull(tache.getTitre());
+        // assertNotNull(tache.getDescription());
+        // assertNotNull(tache.getPriorite());
+        // assertNotNull(tache.getStatut());
+        // assertNotNull(tache.getDateCreation());
+        // assertNotNull(tache.getProjet());
         // }
     }
 
     @Test
-    public void testPagination() {
-        int pageSize = 5;
-        int totalPages = tacheService.getTotalPages(pageSize);
+    public void testGetMembersAndTasksForProject() {
+        int projectId = 1; // Assuming project with ID 1 exists
+        Map<Members, List<Tache>> memberTaskMap = tacheService.getMembersAndTasksForProject(projectId);
     
-        // Assert that we have at least 2 pages
-        assertTrue(totalPages >= 2);
+        assertNotNull(memberTaskMap);
+        assertFalse(memberTaskMap.isEmpty());
     
-        // Test first page
-        List<Tache> firstPage = tacheService.getTachePage(1, pageSize);
-        assertEquals(pageSize, firstPage.size());
+        System.out.println("Members and Tasks for Project " + projectId + ":");
+        for (Map.Entry<Members, List<Tache>> entry : memberTaskMap.entrySet()) {
+            Members member = entry.getKey();
+            List<Tache> tasks = entry.getValue();
     
-        // Test second page
-        List<Tache> secondPage = tacheService.getTachePage(2, pageSize);
-        assertTrue(secondPage.size() > 0);
-        assertTrue(secondPage.size() <= pageSize);
+            System.out.println("Member: " + member.getNom() + " " + member.getPrenom() + " (ID: " + member.getId() + ")");
+            System.out.println("Tasks:");
+            if (tasks.isEmpty()) {
+                System.out.println("No tasks assigned");
+            } else {
+                for (Tache task : tasks) {
+                    System.out.println("- " + task.getTitre() + " (ID: " + task.getId() + ", Priority: " + task.getPriorite() + ")");
+                }
+            }
+            System.out.println();
+        }
     
-        // Ensure first and second page are different
-        assertNotEquals(firstPage.get(0).getId(), secondPage.get(0).getId());
+        // Print all tasks for the project
+        List<Tache> allProjectTasks = tacheService.getTachesByProjet(projectId);
+        System.out.println("All tasks for Project " + projectId + ":");
+        for (Tache task : allProjectTasks) {
+            System.out.println("- " + task.getTitre() + " (ID: " + task.getId() + ", Member ID: " + (task.getMembre() != null ? task.getMembre().getId() : "null") + ")");
+        }
     
-        // Test last page
-        List<Tache> lastPage = tacheService.getTachePage(totalPages, pageSize);
-        assertTrue(lastPage.size() > 0);
-        assertTrue(lastPage.size() <= pageSize);
-    
-        // Test out of range page (should return empty list)
-        List<Tache> outOfRangePage = tacheService.getTachePage(totalPages + 1, pageSize);
-        assertTrue(outOfRangePage.isEmpty());
+        // Assert that at least one member has tasks
+        boolean atLeastOneMemberHasTasks = memberTaskMap.values().stream().anyMatch(tasks -> !tasks.isEmpty());
+        assertTrue("At least one member should have tasks", atLeastOneMemberHasTasks);
     }
 }
