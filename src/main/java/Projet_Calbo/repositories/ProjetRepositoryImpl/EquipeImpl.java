@@ -126,7 +126,7 @@ public class EquipeImpl implements GeneralInterface<Equipe> , MultiInterface<Equ
 	@Override
 	public List<Equipe> getPage(int page, int pageSize) {
 		List<Equipe> equipes = new ArrayList<>();
-		String sql = "SELECT * FROM equipe where  LIMIT ? OFFSET ?";
+		String sql = "SELECT * FROM equipe LIMIT ? OFFSET ?";
 		
 		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
 			statement.setInt(1, pageSize);
