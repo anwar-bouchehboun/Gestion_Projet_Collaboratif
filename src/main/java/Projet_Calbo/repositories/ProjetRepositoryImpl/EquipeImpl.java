@@ -9,6 +9,7 @@ import java.util.List;
 import Projet_Calbo.config.DatabaseConnection;
 import Projet_Calbo.model.Equipe;
 import Projet_Calbo.repositories.GeneralInterface;
+import Projet_Calbo.utilis.LoggerMessage;
 
 public class EquipeImpl implements GeneralInterface<Equipe>  {
 
@@ -26,7 +27,7 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	            return true; 
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error inserting team: " + e.getMessage());
+            LoggerMessage.error("Error inserting team: " + e.getMessage());
 	    }
 	    return false;
 	}
@@ -45,12 +46,13 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	        
 	        int rowsUpdated = statement.executeUpdate();
 	        if (rowsUpdated > 0) {
-	            System.out.println("Team updated successfully.");
+	        	LoggerMessage.info("Team updated successfully.");
 	        } else {
-	            System.out.println("No team found with the given ID.");
+	        	LoggerMessage.warn("No team found with the given ID.");
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error updating team: " + e.getMessage());
+            LoggerMessage.error("Error updating team: " + e.getMessage());
+
 	    }
 	}
 
@@ -67,7 +69,7 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	        if (rowsDeleted > 0) {
 	            System.out.println("Team deleted successfully.");
 	        } else {
-	            System.out.println("No team found with the given ID.");
+	        	LoggerMessage.warn("No team found with the given ID.");
 	        }
 	    } catch (SQLException e) {
 	        System.out.println("Error deleting team: " + e.getMessage());
@@ -91,7 +93,7 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	            equipes.add(equipe);
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error retrieving teams: " + e.getMessage());
+	    	LoggerMessage.error("Error retrieving teams: " + e.getMessage());
 	    }
 	    
 	    return equipes;
@@ -116,7 +118,7 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	            }
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error finding team by ID: " + e.getMessage());
+	    	LoggerMessage.error("Error finding team by ID: " + e.getMessage());
 	    }
 	    
 	    return equipe;

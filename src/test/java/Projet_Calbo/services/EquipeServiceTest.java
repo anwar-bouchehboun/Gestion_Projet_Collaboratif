@@ -1,6 +1,8 @@
 package Projet_Calbo.services;
 
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,9 +23,8 @@ public class EquipeServiceTest {
 
 	@Test
 	public void testGetAll() {
-		  Equipe equipe = new Equipe();
-	        equipe.setNom("Team C");
-	        equipeService.saveEquipe(equipe); 
+		List<Equipe> equipeListe = equipeService.getAll();
+		equipeListe.stream().forEach(System.out::println);
 	}
 
 	@Test

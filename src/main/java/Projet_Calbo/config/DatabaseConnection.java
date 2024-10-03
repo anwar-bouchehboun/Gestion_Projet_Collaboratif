@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import Projet_Calbo.utilis.LoggerMessage;
+
 public class DatabaseConnection {
     private static DatabaseConnection instance;
     private Connection connection;
@@ -17,8 +19,9 @@ public class DatabaseConnection {
     private DatabaseConnection() {
         try {
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
         } catch (SQLException e) {
-            //LoggerMessage.debug("Failed to connect to the database: " + e.getMessage());
+            LoggerMessage.debug("Failed to connect to the database: " + e.getMessage());
         }
     }
 
@@ -39,7 +42,7 @@ public class DatabaseConnection {
                 connection = DriverManager.getConnection(DB_URL, USER, PASS);
             }
         } catch (SQLException e) {
-            //LoggerMessage.error("Failed to re-establish the database connection: " + e.getMessage());
+            LoggerMessage.error("Failed to re-establish the database connection: " + e.getMessage());
         }
         return connection;
     }
@@ -48,9 +51,9 @@ public class DatabaseConnection {
         if (connection != null) {
             try {
                 connection.close();
-                //LoggerMessage.info("Database connection closed");
+                LoggerMessage.info("Database connection closed");
             } catch (SQLException e) {
-               // LoggerMessage.error("Failed to close the database connection: " + e.getMessage());
+               LoggerMessage.error("Failed to close the database connection: " + e.getMessage());
             }
         }
     }
