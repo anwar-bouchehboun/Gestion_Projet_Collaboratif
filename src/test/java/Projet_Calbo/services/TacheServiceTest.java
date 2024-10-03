@@ -111,7 +111,9 @@ public class TacheServiceTest {
     @Test
     public void testGetMembersAndTasksForProject() {
         int projectId = 1; // Assuming project with ID 1 exists
-        Map<Members, List<Tache>> memberTaskMap = tacheService.getMembersAndTasksForProject(projectId);
+        Projet projet = new Projet();
+        projet.setId(projectId);
+        Map<Members, List<Tache>> memberTaskMap = tacheService.getMembersAndTasksForProject(projet);
     
         assertNotNull(memberTaskMap);
         assertFalse(memberTaskMap.isEmpty());

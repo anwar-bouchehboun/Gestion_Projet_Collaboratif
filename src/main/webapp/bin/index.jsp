@@ -3,4 +3,4 @@ pageEncoding="UTF-8" %>
 
 <% request.setAttribute("title", "../content/index.jsp"); %>
 
-<jsp:include page="./views/layout/layout.jsp" />
+<jsp:include page="/views/layout/layout.jsp" />
