@@ -20,6 +20,6 @@
 </servlet>
 <servlet-mapping>
     <servlet-name>TacheServlet</servlet-name>
-    <url-pattern>/tache/*</url-pattern>
+    <url-pattern>/tache</url-pattern>
 </servlet-mapping>
 </web-app>
