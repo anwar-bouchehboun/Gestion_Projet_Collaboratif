@@ -19,19 +19,18 @@ public class EquipeServlet extends HttpServlet {
 	public EquipeServlet() {
 		super();
 		equipeService = new EquipeService();
+
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = request.getParameter("action");
 
 		try {
-			if (action == null || action.equals("list")) {
-				listEquipes(request, response);
-			} else {
-				// Handle other actions if needed
-			}
+				List<Equipe> equipeList = equipeService.getAll();
+			
+				  request.setAttribute("equipeList", equipeList);
+	
 		} catch (Exception e) {
 			LoggerMessage.error(e.getMessage());
 			request.setAttribute("errorMessage", e.getMessage());
@@ -85,7 +84,7 @@ public class EquipeServlet extends HttpServlet {
 	protected void listEquipes(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int page = 1;
-		int pageSize = 5; // You can adjust this value as needed
+		int pageSize = 5; 
 
 		String pageParam = request.getParameter("page");
 		if (pageParam != null && !pageParam.isEmpty()) {
@@ -93,13 +92,14 @@ public class EquipeServlet extends HttpServlet {
 		}
 
 		List<Equipe> equipes = equipeService.getEquipePage(page, pageSize);
+		 
 		long totalEquipes = equipeService.countEquipes();
 		int totalPages = (int) Math.ceil((double) totalEquipes / pageSize);
-
+        
 		request.setAttribute("equipes", equipes);
 		request.setAttribute("currentPage", page);
 		request.setAttribute("totalPages", totalPages);
-
+        
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/equipe.jsp");
 		dispatcher.forward(request, response);
 	}
