@@ -205,67 +205,62 @@
   <div class="card">
     <div class="card-header">Liste des Membres</div>
     <div class="card-body p-0">
-      <div class="table-responsive">
-        <table class="table table-light">
-          <thead>
-            <tr>
-              <th scope="col">Nom</th>
-              <th scope="col">Prenom</th>
-              <th scope="col">Email</th>
-              <th scope="col">Role</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="taskTableBody">
-            <tr>
-              <td>ANWAR</td>
-              <td>Ali</td>
-              <td>anwar.ali@example.com</td>
-              <td>Admin</td>
-              <td class="d-flex flex-row gap-1">
-                <button class="btn btn-icon btn-edit me-1" title="Modifier">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button class="btn btn-icon btn-delete" title="Supprimer">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>SMITH</td>
-              <td>John</td>
-              <td>john.smith@example.com</td>
-              <td>User</td>
-              <td class="d-flex flex-row gap-1">
-                <button
-                  class="btn btn-icon btn-edit me-1"
-                  onclick="editTask(${task.id})"
-                  title="Modifier"
-                >
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button
-                  class="btn btn-icon btn-delete"
-                  onclick="deleteTask(${task.id})"
-                  title="Supprimer"
-                >
-                  <i class="bi bi-trash"></i>
-                </button>
-              </td>
-            </tr>
-            <!-- Additional rows as needed -->
-          </tbody>
-        </table>
-      </div>
+      <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger" role="alert">
+          ${errorMessage}
+        </div>
+      </c:if>
+      <c:if test="${membersEmpty}">
+        <div class="alert alert-info" role="alert">
+          Aucun membre trouvé.
+        </div>
+      </c:if>
+      <c:if test="${not membersEmpty}">
+        <div class="table-responsive">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Equipe</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="taskTableBody">
+              <c:forEach var="member" items="${members}">
+                <tr>
+                  <td>${member.nom}</td>
+                  <td>${member.prenom}</td>
+                  <td>${member.email}</td>
+                  <td>${member.role}</td>
+                  <td>${member.equipe.nom}</td>
+                  <td class="d-flex flex-row gap-1">
+                    <button class="btn btn-icon btn-edit me-1" onclick="editMember(${member.id})" title="Modifier">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-icon btn-delete" onclick="deleteMember(${member.id})" title="Supprimer">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </c:forEach>
+            </tbody>
+          </table>
+        </div>
+      </c:if>
     </div>
   </div>
 
   <!-- Pagination -->
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center mt-4">
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item active"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <c:forEach begin="1" end="${totalPages}" var="i">
+          <li class="page-item ${currentPage == i ? 'active' : ''}">
+              <a class="page-link" href="<c:url value='/member?action=list&page=${i}'/>">${i}</a>
+          </li>
+      </c:forEach>
     </ul>
   </nav>
 </div>

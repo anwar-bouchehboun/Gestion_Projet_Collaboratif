@@ -191,7 +191,7 @@
 
     <!-- Create New Team Form -->
     <div class="mb-4">
-        <form action="/Projet_Calbo/equipe" method="POST"> <!-- specify the action URL -->
+        <form action="${pageContext.request.contextPath}/equipe" method="POST">
             <input type="hidden" name="action" value="addTeam" />
             <div class="d-flex flex-column flex-md-row mb-3">
                 <div class="col-auto me-md-2 mb-2 mb-md-0">
@@ -203,9 +203,19 @@
             </div>
         </form>
     </div>
-<c:if test="${not empty errorMessage}">
-    <p style="color:red;">${errorMessage}</p>
-</c:if>
+
+    <c:if test="${not empty message}">
+        <div class="alert alert-success" role="alert">
+            ${message}
+        </div>
+    </c:if>
+
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger" role="alert">
+            ${errorMessage}
+        </div>
+    </c:if>
+
     <!-- Equipe List -->
     <div class="card">
         <div class="card-header">Liste des Equipes</div>
@@ -219,41 +229,50 @@
                         </tr>
                     </thead>
                     <tbody id="taskTableBody">
-                    <c:if test="${not empty equipeList}">
-                        <c:forEach var="equipe" items="${equipeList}">
-                            <tr>
-                                <td>${equipe.nom}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-icon btn-edit me-1" title="Modifier" data-toggle="modal" data-target="#updateModal" data-id="${equipe.id}"  data-name="${equipe.nom}">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <form action="/Projet_Calbo/equipe" method="POST" style="display:inline;">
-                                        <input type="hidden" name="action" value="deleteTeam" />
-                                        <input type="hidden" name="id" value="${equipe.id}" />
-                                        <button type="submit" class="btn btn-icon btn-delete" title="Supprimer">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </c:if>
-           </tbody>
+                        <c:choose>
+                            <c:when test="${not empty equipes}">
+                                <c:forEach var="equipe" items="${equipes}">
+                                    <tr>
+                                        <td>${equipe.nom}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-icon btn-edit me-1" title="Modifier" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="${equipe.id}" data-name="${equipe.nom}">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <form action="${pageContext.request.contextPath}/equipe" method="POST" style="display:inline;">
+                                                <input type="hidden" name="action" value="deleteTeam" />
+                                                <input type="hidden" name="id" value="${equipe.id}" />
+                                                <button type="submit" class="btn btn-icon btn-delete" title="Supprimer">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <tr>
+                                    <td colspan="2" class="text-center">Aucune équipe trouvée.</td>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
     
-        <!-- Pagination -->
-             <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center mt-4">
-                    <c:forEach begin="1" end="${totalPages}" var="i">
-                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                            <a class="page-link" href="<c:url value='/equipe?action=list&page=${i}'/>">${i}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </nav>
+    <!-- Pagination -->
+    <c:if test="${totalPages > 1}">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mt-4">
+                <c:forEach begin="1" end="${totalPages}" var="i">
+                    <li class="page-item ${currentPage == i ? 'active' : ''}">
+                        <a class="page-link" href="${pageContext.request.contextPath}/equipe?action=list&page=${i}">${i}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </nav>
+    </c:if>
 </div>
 
 <!-- Update Modal -->
@@ -261,7 +280,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Modifier �quipe</h5>
+                <h5 class="modal-title" id="updateModalLabel">Modifier quipe</h5>
             </div>
             <div class="modal-body">
                 <form id="updateForm" action="/Projet_Calbo/equipe" method="POST">
@@ -282,12 +301,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    $('#updateModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); 
-        var id=button.data('id');
-        var teamName = button.data('name'); 
-        var modal = $(this);
-        modal.find('#id').val(id); 
-        modal.find('#newName').val(teamName); 
-    });
+  $('#updateModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var id = button.data('id');
+      var teamName = button.data('name');
+      var modal = $(this);
+      modal.find('#id').val(id);
+      modal.find('#newName').val(teamName);
+  });
 </script>

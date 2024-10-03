@@ -11,9 +11,10 @@ import Projet_Calbo.model.Equipe;
 import Projet_Calbo.model.Members;
 import Projet_Calbo.model.Role;
 import Projet_Calbo.repositories.GeneralInterface;
+import Projet_Calbo.repositories.MultiInterface;
 import Projet_Calbo.utilis.LoggerMessage;
 
-public class MemberImp implements GeneralInterface<Members> {
+public class MemberImp implements GeneralInterface<Members>, MultiInterface<Members> {
 
 	@Override
 	public boolean save(Members entity) {
@@ -150,4 +151,52 @@ public class MemberImp implements GeneralInterface<Members> {
 		return member;
 	}
 
+	@Override
+	public List<Members> getPage(int page, int pageSize) {
+		List<Members> membersList = new ArrayList<>();
+		String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.nom AS equipe_nom "
+				+
+				"FROM membre JOIN equipe ON membre.equipe_id = equipe.id " +
+				"LIMIT ? OFFSET ?";
+
+		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+			statement.setInt(1, pageSize);
+			statement.setInt(2, (page - 1) * pageSize);
+
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					Members member = new Members();
+					member.setId(resultSet.getInt("id"));
+					member.setNom(resultSet.getString("membre_nom"));
+					member.setPrenom(resultSet.getString("prenom"));
+					member.setEmail(resultSet.getString("email"));
+					member.setRole(Role.valueOf(resultSet.getString("role")));
+
+					Equipe equipe = new Equipe();
+					equipe.setNom(resultSet.getString("equipe_nom"));
+					member.setEquipe(equipe);
+
+					membersList.add(member);
+				}
+			}
+		} catch (SQLException e) {
+			LoggerMessage.error("Error retrieving members page: " + e.getMessage());
+		}
+
+		return membersList;
+	}
+
+	@Override
+	public long count() {
+		String sql = "SELECT COUNT(*) FROM membre";
+		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+				ResultSet resultSet = statement.executeQuery()) {
+			if (resultSet.next()) {
+				return resultSet.getLong(1);
+			}
+		} catch (SQLException e) {
+			LoggerMessage.error("Error counting members: " + e.getMessage());
+		}
+		return 0;
+	}
 }
