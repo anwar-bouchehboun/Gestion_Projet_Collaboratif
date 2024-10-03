@@ -50,33 +50,25 @@ public class ProjetServiceTest {
 
         LoggerMessage.info("Project deleted successfully.");
     }
-//    @Test
-//    public void testUpdateProjet() {
-//        Projet projet = new Projet();
-//        projet.setNom("Project to Update");
-//        projet.setDescription("Description of the project to update");
-//        projet.setDateDebut(java.time.LocalDate.now());
-//        projet.setDateFin(java.time.LocalDate.now().plusDays(30));
-//        projet.setStatut(StatutProjet.ENCOURS); 
-//
-//        Equipe equipe = new Equipe();
-//        equipe.setId(2); 
-//        projet.setEquipe(equipe);
-//
-//        projetService.saveProjet(projet); 
-//
-//        projet.setNom("Updated Project Name");
-//        projet.setDescription("Updated description of the project");
-//
-//        projetService.updateProjet(projet); 
-//
-//        Projet updatedProjet = projetService.getById(projet.getId());
-//
-//        assertTrue("The project name should be updated.", 
-//                   "Updated Project Name".equals(updatedProjet.getNom()));
-//        assertTrue("The project description should be updated.", 
-//                   "Updated description of the project".equals(updatedProjet.getDescription()));
-//    }
+    @Test
+    public void testUpdateProjet() {
+        Projet projet = new Projet();
+        projet.setId(2); 
+        projet.setNom("Project to Update");
+        projet.setDescription("Description of the project to update");
+        projet.setDateDebut(java.time.LocalDate.now());
+        projet.setDateFin(java.time.LocalDate.now().plusDays(30));
+        projet.setStatut(StatutProjet.ENCOURS); 
+
+        Equipe equipe = new Equipe();
+        equipe.setId(2); 
+        projet.setEquipe(equipe);
+
+
+        projetService.updateProjet(projet); 
+
+     
+    }
     
     @Test
     public void testGetById() {
