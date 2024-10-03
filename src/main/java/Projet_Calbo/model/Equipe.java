@@ -42,4 +42,12 @@ public class Equipe {
     public void setMembers(List<Members> members) {
         this.members = members;
     }
+    public String toString() {
+        return "Equipe{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", members=" + (members != null ? members.toString() : "[]") +
+                '}';
+    }
+
 }

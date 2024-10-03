@@ -11,6 +11,7 @@ import Projet_Calbo.model.Equipe;
 import Projet_Calbo.model.Members;
 import Projet_Calbo.model.Role;
 import Projet_Calbo.repositories.GeneralInterface;
+import Projet_Calbo.utilis.LoggerMessage;
 
 public class MemberImp implements GeneralInterface<Members> {
 
@@ -32,7 +33,7 @@ public class MemberImp implements GeneralInterface<Members> {
 	            return true; 
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error inserting member: " + e.getMessage());
+	    	LoggerMessage.error("Error inserting member: " + e.getMessage());
 	    }
 	    
 	    return false;
@@ -57,10 +58,10 @@ public class MemberImp implements GeneralInterface<Members> {
 	        if (rowsUpdated > 0) {
 	            System.out.println("Member updated successfully.");
 	        } else {
-	            System.out.println("No member found with the given ID.");
+	        	LoggerMessage.warn("No member found with the given ID.");
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error updating member: " + e.getMessage());
+	    	LoggerMessage.error("Error updating member: " + e.getMessage());
 	    }
 	}
 
@@ -79,10 +80,10 @@ public class MemberImp implements GeneralInterface<Members> {
 	        if (rowsDeleted > 0) {
 	            System.out.println("Member deleted successfully.");
 	        } else {
-	            System.out.println("No member found with the given ID.");
+	        	LoggerMessage.warn("No member found with the given ID.");
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error deleting member: " + e.getMessage());
+	    	LoggerMessage.error("Error deleting member: " + e.getMessage());
 	    }
 	}
 
@@ -113,7 +114,7 @@ public class MemberImp implements GeneralInterface<Members> {
 	            membersList.add(member); 
 	        }
 	    } catch (SQLException e) {
-	        System.out.println("Error retrieving members: " + e.getMessage());
+	    	LoggerMessage.error("Error retrieving members: " + e.getMessage());
 	    }
 
 	    return membersList;
