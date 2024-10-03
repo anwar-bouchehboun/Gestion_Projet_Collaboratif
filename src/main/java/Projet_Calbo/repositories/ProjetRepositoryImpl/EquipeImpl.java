@@ -8,6 +8,7 @@ import java.util.List;
 
 import Projet_Calbo.config.DatabaseConnection;
 import Projet_Calbo.model.Equipe;
+import Projet_Calbo.model.Members;
 import Projet_Calbo.repositories.GeneralInterface;
 import Projet_Calbo.utilis.LoggerMessage;
 
@@ -123,7 +124,45 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	    
 	    return equipe;
 	}
-
+	@Override
+	public List<Equipe> getPage(int page, int pageSize) {
+		List<Equipe> equipes = new ArrayList<>();
+		String sql = "SELECT * FROM equipe where  LIMIT ? OFFSET ?";
+		
+		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+			statement.setInt(1, pageSize);
+			statement.setInt(2, (page - 1) * pageSize);
+			
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					Equipe equipe = new Equipe();
+					equipe.setId(resultSet.getInt("id"));
+					equipe.setNom(resultSet.getString("nom"));
+					equipes.add(equipe);
+				}
+			}
+		} catch (SQLException e) {
+			LoggerMessage.error("Error retrieving page of teams: " + e.getMessage());
+		}
+		
+		return equipes;
+	}
 	
+	@Override
+	public long count() {
+		String sql = "SELECT COUNT(*) FROM equipe";
+		long count = 0;
+		
+		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+			 ResultSet resultSet = statement.executeQuery()) {
+			if (resultSet.next()) {
+				count = resultSet.getLong(1);
+			}
+		} catch (SQLException e) {
+			LoggerMessage.error("Error counting teams: " + e.getMessage());
+		}
+		
+		return count;
+	}
 
 }
