@@ -25,5 +25,15 @@ public class EquipeService {
 		equipe.update(e);
 	}
 	
+	
+	
+	public Long countEquipes() {
+		return equipe.count();
+	}
+
+	public List<Equipe> getEquipePage(int page, int pageSize) {
+		
+		return equipe.getPage(page,pageSize);
+	}
 
 }

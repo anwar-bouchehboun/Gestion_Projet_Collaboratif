@@ -8,7 +8,6 @@ import java.util.List;
 
 import Projet_Calbo.config.DatabaseConnection;
 import Projet_Calbo.model.Equipe;
-import Projet_Calbo.model.Members;
 import Projet_Calbo.repositories.GeneralInterface;
 import Projet_Calbo.utilis.LoggerMessage;
 
@@ -127,7 +126,7 @@ public class EquipeImpl implements GeneralInterface<Equipe>  {
 	@Override
 	public List<Equipe> getPage(int page, int pageSize) {
 		List<Equipe> equipes = new ArrayList<>();
-		String sql = "SELECT * FROM equipe where  LIMIT ? OFFSET ?";
+		String sql = "SELECT * FROM equipe LIMIT ? OFFSET ?";
 		
 		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
 			statement.setInt(1, pageSize);
