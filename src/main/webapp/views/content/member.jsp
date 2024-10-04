@@ -190,7 +190,6 @@
 
 
 
-  <!-- Create New Member Button -->
   <div class="text-end mb-3">
     <button
       class="btn btn-primary"
@@ -201,7 +200,7 @@
     </button>
   </div>
 
-  <!-- Members List -->
+
   <div class="card">
     <div class="card-header">Liste des Membres</div>
     <div class="card-body p-0">
