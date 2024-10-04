@@ -13,6 +13,7 @@ import Projet_Calbo.model.Equipe;
 import Projet_Calbo.services.EquipeService;
 
 public class EquipeServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private EquipeService equipeService;
 
     public EquipeServlet() {
@@ -20,77 +21,103 @@ public class EquipeServlet extends HttpServlet {
         equipeService = new EquipeService();
     }
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        action = (action == null) ? "list" : action;
+
+        if (action == null) {
+            action = "list";
+        }
 
         switch (action) {
             case "list":
                 listEquipes(request, response);
                 break;
-            case "showAddForm":
+            case "add":
                 showAddForm(request, response);
                 break;
-            case "showEditForm":
+            case "edit":
                 showEditForm(request, response);
+                break;
+            case "delete":
+                deleteTeam(request, response);
                 break;
             default:
                 listEquipes(request, response);
         }
     }
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        try {
-            switch (action) {
-                case "addTeam":
-                    addTeam(request, response);
-                    break;
-                case "updateTeam":
-                    updateTeam(request, response);
-                    break;
-                case "deleteTeam":
-                    deleteTeam(request, response);
-                    break;
-                default:
-                    response.sendRedirect(request.getContextPath() + "/equipe?action=list");
-            }
-        } catch (Exception e) {
-            handleException(e, request, response);
+        switch (action) {
+            case "add":
+                addTeam(request, response);
+                break;
+            case "updateTeam":
+                updateTeam(request, response);
+                break;
+            case "delete":
+                deleteTeam(request, response);
+                break;
+            default:
+                listEquipes(request, response);
         }
     }
 
     private void listEquipes(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int page = getPageNumber(request);
-        int pageSize = 5;
+        try {
+            int page = 1;
+            int pageSize = 5;
 
-        List<Equipe> equipes = equipeService.getAll();
-        int totalEquipes = equipes.size();
-        int totalPages = (int) Math.ceil((double) totalEquipes / pageSize);
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
 
-        setRequestAttributes(request, equipes, page, totalPages);
-        forwardToJsp(request, response, "/views/equipe.jsp");
+            List<Equipe> equipes = equipeService.getAll();
+            int totalItems = equipes.size();
+            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+            int startIndex = (page - 1) * pageSize;
+            int endIndex = Math.min(startIndex + pageSize, totalItems);
+            List<Equipe> paginatedEquipes = equipes.subList(startIndex, endIndex);
+
+            request.setAttribute("equipes", paginatedEquipes);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("totalItems", totalItems);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage",
+                    "Une erreur s'est produite lors de la récupération des équipes: " + e.getMessage());
+        }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/content/equipe.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        forwardToJsp(request, response, "/views/equipe_add_form.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/equipe.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Equipe equipe = equipeService.getEquipeById(id);
+        List<Equipe> equipes = equipeService.getAll();
+        Equipe equipe = equipes.stream()
+                .filter(e -> e.getId() == id)
+                .findFirst()
+                .orElse(null);
 
         if (equipe != null) {
             request.setAttribute("equipe", equipe);
-            forwardToJsp(request, response, "/views/equipe_edit_form.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/equipe.jsp");
+            dispatcher.forward(request, response);
         } else {
             setErrorMessage(request, "Équipe non trouvée.");
             response.sendRedirect(request.getContextPath() + "/equipe?action=list");
@@ -111,7 +138,11 @@ public class EquipeServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String newName = request.getParameter("newName");
-        Equipe equipeToUpdate = equipeService.getEquipeById(id);
+        List<Equipe> equipes = equipeService.getAll();
+        Equipe equipeToUpdate = equipes.stream()
+                .filter(e -> e.getId() == id)
+                .findFirst()
+                .orElse(null);
 
         if (equipeToUpdate != null) {
             equipeToUpdate.setNom(newName);
@@ -126,7 +157,13 @@ public class EquipeServlet extends HttpServlet {
     private void deleteTeam(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Equipe equipeToDelete = equipeService.getEquipeById(id);
+        System.out.println(id);
+        
+        List<Equipe> equipes = equipeService.getAll();
+        Equipe equipeToDelete = equipes.stream()
+                .filter(e -> e.getId() == id)
+                .findFirst()
+                .orElse(null);
 
         if (equipeToDelete != null) {
             equipeService.deleteEquipe(equipeToDelete);
@@ -137,35 +174,11 @@ public class EquipeServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/equipe?action=list");
     }
 
-    private int getPageNumber(HttpServletRequest request) {
-        String pageParam = request.getParameter("page");
-        return (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
-    }
-
-    private void setRequestAttributes(HttpServletRequest request, List<Equipe> equipes, int page, int totalPages) {
-        request.setAttribute("equipes", equipes);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-    }
-
     private void setSuccessMessage(HttpServletRequest request, String message) {
-        request.getSession().setAttribute("message", message);
+        request.getSession().setAttribute("successMessage", message);
     }
 
     private void setErrorMessage(HttpServletRequest request, String errorMessage) {
         request.getSession().setAttribute("errorMessage", errorMessage);
-    }
-
-    private void forwardToJsp(HttpServletRequest request, HttpServletResponse response, String jspPath)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(jspPath);
-        dispatcher.forward(request, response);
-    }
-
-    private void handleException(Exception e, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        e.printStackTrace();
-        setErrorMessage(request, "Une erreur s'est produite lors du traitement de la demande.");
-        response.sendRedirect(request.getContextPath() + "/equipe?action=list");
     }
 }

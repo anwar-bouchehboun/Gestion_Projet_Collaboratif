@@ -18,7 +18,7 @@ public class LoggerMessage {
     }
     public static  void debug(String message){
         logger.debug(message);
-
+        
     }
 
 

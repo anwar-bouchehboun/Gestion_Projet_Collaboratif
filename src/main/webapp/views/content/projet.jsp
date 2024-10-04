@@ -326,16 +326,25 @@
                             <label for="description" class="form-label">Description</label>
                             <textarea class="form-control" name="description" id="description" required></textarea>
                     </div>
-                            
                             <div class="mb-4">
-                                <label for="Role" class="form-label">Statut</label>
+                                <label for="equipe" class="form-label">équipe</label>
                                 <select class="form-select" id="Role" name="role" required>
-                                    <option value="">Sélectionner un statut</option>
-                                    <option value="Admin">En cours</option>
-                                    <option value="User">Terminée</option>
-                                    <option value="Editor">Annulé</option>
+                                    <option value="">Sélectionner une équipe</option>
+                                    <option value="">fvfvf</option>
+                                    <option value="">fdfd</option>
+                                    <option value="">aaaaa</option>
                                 </select>
                             </div>
+                            <div class="mb-4">
+                                <label for="statut" class="form-label">Statut</label>
+                                <select class="form-select" id="statut" name="statut" required>
+                                    <option value="">Sélectionner un statut</option>
+                                    <option value="">En cours</option>
+                                    <option value="">Terminée</option>
+                                    <option value="">Annulé</option>
+                                </select>
+                            </div>
+                            
                             <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="Nom" class="form-label">Date de création</label>
