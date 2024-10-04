@@ -20,8 +20,7 @@ public class MemberServlet extends HttpServlet {
 	private MemberService memberService;
 	private EquipeService equipeService;
 
-	public MemberServlet() {
-		super();
+	public void init() {
 		memberService = new MemberService();
 		equipeService = new EquipeService();
 	}
@@ -72,7 +71,7 @@ public class MemberServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			int page = 1;
-			int pageSize = 4;
+			int pageSize = 5;
 
 			if (request.getParameter("page") != null) {
 				page = Integer.parseInt(request.getParameter("page"));
@@ -87,7 +86,6 @@ public class MemberServlet extends HttpServlet {
 			request.setAttribute("members", members);
 			request.setAttribute("currentPage", page);
 			request.setAttribute("totalPages", totalPages);
-
 			request.setAttribute("membersEmpty", members.isEmpty());
 
 			List<Equipe> equipes = equipeService.getAll();
@@ -117,16 +115,14 @@ public class MemberServlet extends HttpServlet {
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		Members membre = new Members();
-		membre.setId(id);
-		if (membre != null) {
-			List<Equipe> equipes = equipeService.getAll();
-			request.setAttribute("member", membre);
-			request.setAttribute("equipes", equipes);
-			request.setAttribute("roles", Role.values());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/views/member.jsp");
-			dispatcher.forward(request, response);
-		}
+		Members member = new Members();
+
+		List<Equipe> equipes = equipeService.getAll();
+		request.setAttribute("member", member);
+		request.setAttribute("equipes", equipes);
+		request.setAttribute("roles", Role.values());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/member.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void addMember(HttpServletRequest request, HttpServletResponse response)
@@ -137,17 +133,16 @@ public class MemberServlet extends HttpServlet {
 		Role role = Role.valueOf(request.getParameter("role"));
 		int equipeId = Integer.parseInt(request.getParameter("equipeId"));
 
-		Members newMember = new Members();
-		newMember.setNom(nom);
-		newMember.setPrenom(prenom);
-		newMember.setEmail(email);
-		newMember.setRole(role);
-
+		Members member = new Members();
+		member.setNom(nom);
+		member.setPrenom(prenom);
+		member.setEmail(email);
+		member.setRole(role);
 		Equipe equipe = new Equipe();
 		equipe.setId(equipeId);
-		newMember.setEquipe(equipe);
+		member.setEquipe(equipe);
 
-		memberService.saveMember(newMember);
+		memberService.saveMember(member);
 		response.sendRedirect(request.getContextPath() + "/member?action=list");
 	}
 
@@ -166,13 +161,11 @@ public class MemberServlet extends HttpServlet {
 		member.setPrenom(prenom);
 		member.setEmail(email);
 		member.setRole(role);
-
 		Equipe equipe = new Equipe();
 		equipe.setId(equipeId);
 		member.setEquipe(equipe);
 
 		memberService.updateMember(member);
-
 		response.sendRedirect(request.getContextPath() + "/member?action=list");
 	}
 
