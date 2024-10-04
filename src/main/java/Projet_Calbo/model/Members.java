@@ -89,7 +89,7 @@ public class Members {
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
-                ", equipe=" + (equipe != null ? equipe.getNom() : "null") +  
+                ", equipe=" + (equipe != null ? equipe.getId() : "null") +  
                 '}';
     }
 

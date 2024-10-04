@@ -45,7 +45,7 @@ public class MemberServiceTest {
 		member.setRole(Role.DEVELOPPEUR);
 		e.setId(2);
 		member.setEquipe(e);
-		memberService.saveEquipe(member);
+		memberService.saveMember(member);
 		LoggerMessage.info("save Members");
 	}
 
@@ -54,7 +54,7 @@ public class MemberServiceTest {
 		//delete data
 		  Members member = new Members();
 		    member.setId(6);
-		    memberService.deleteEquipe(member);
+		    memberService.deleteMember(member);
 			LoggerMessage.info("delete Members");
 
 	}
@@ -72,7 +72,7 @@ public class MemberServiceTest {
 		    Equipe e = new Equipe();
 		    e.setId(16);
 		    member.setEquipe(e);
-		    memberService.updateEquipe(member);
+		    memberService.updateMember(member);
 			LoggerMessage.info("update Members");
 
 	}

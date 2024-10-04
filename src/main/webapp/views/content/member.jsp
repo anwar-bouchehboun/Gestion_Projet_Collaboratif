@@ -185,202 +185,124 @@
         }
       }
     </style>
-<div class="container">
-  <h2 class="text-center mb-4">Gestion des Members</h2>
+<div class="container mt-5">
+  <h2 class="mb-4">Liste des Membres</h2>
+  <button class="btn btn-primary mb-3" onclick="showAddMemberModal()">Ajouter un Membre</button>
 
-
-
-  <!-- Create New Member Button -->
-  <div class="text-end mb-3">
-    <button
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#taskModal"
-    >
-      <i class="bi bi-plus-circle"></i> Creer un nouvelle Membre
-    </button>
-  </div>
-
-  <!-- Members List -->
-  <div class="card">
-    <div class="card-header">Liste des Membres</div>
-    <div class="card-body p-0">
-      <c:if test="${not empty errorMessage}">
-        <div class="alert alert-danger" role="alert">
-          ${errorMessage}
-        </div>
-      </c:if>
-      <c:if test="${membersEmpty}">
-        <div class="alert alert-info" role="alert">
-          Aucun membre trouvé.
-        </div>
-      </c:if>
-      <c:if test="${not membersEmpty}">
-        <div class="table-responsive">
-          <table class="table table-light">
-            <thead>
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Prenom</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Equipe</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="taskTableBody">
-              <c:forEach var="member" items="${members}">
-                <tr>
-                  <td>${member.nom}</td>
-                  <td>${member.prenom}</td>
-                  <td>${member.email}</td>
-                  <td>${member.role}</td>
-                  <td>${member.equipe.nom}</td>
-                  <td class="d-flex flex-row gap-1">
-                    <button class="btn btn-icon btn-edit me-1" onclick="editMember(${member.id})" title="Modifier">
-                      <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-icon btn-delete" onclick="deleteMember(${member.id})" title="Supprimer">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              </c:forEach>
-            </tbody>
-          </table>
-        </div>
-      </c:if>
-    </div>
-  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Équipe</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <c:forEach var="member" items="${members}">
+        <tr>
+          <td>${member.nom}</td>
+          <td>${member.prenom}</td>
+          <td>${member.email}</td>
+          <td>${member.role}</td>
+          <td>${member.equipe.nom}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" onclick="editMember(${member.id}, '${member.nom}', '${member.prenom}', '${member.email}', ${member.equipe_id}, '${member.role}')">Modifier</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteMember(${member.id})">Supprimer</button>
+          </td>
+        </tr>
+      </c:forEach>
+    </tbody>
+  </table>
 
   <!-- Pagination -->
   <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center mt-4">
+    <ul class="pagination justify-content-center">
       <c:forEach begin="1" end="${totalPages}" var="i">
-          <li class="page-item ${currentPage == i ? 'active' : ''}">
-              <a class="page-link" href="<c:url value='/member?action=list&page=${i}'/>">${i}</a>
-          </li>
+        <li class="page-item ${currentPage == i ? 'active' : ''}">
+          <a class="page-link" href="${pageContext.request.contextPath}/member?action=list&page=${i}">${i}</a>
+        </li>
       </c:forEach>
     </ul>
   </nav>
 </div>
 
-<!-- Modal for Create/Edit Member -->
-<div
-  class="modal fade"
-  id="taskModal"
-  tabindex="-1"
-  aria-labelledby="taskModalLabel"
-  aria-hidden="true"
->
+<!-- Modal for Add/Edit Member -->
+<div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="memberModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="taskModalLabel">
-          Creer/Modifier un Membre
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <h5 class="modal-title" id="memberModalLabel">Ajouter/Modifier un Membre</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="Memberform">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="Nom" class="form-label">Nom</label>
-              <input
-                type="text"
-                class="form-control"
-                name="nom"
-                id="Nom"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="Prenom" class="form-label">Prenom</label>
-              <input
-                type="text"
-                class="form-control"
-                name="prenom"
-                id="Prenom"
-                required
-              />
-            </div>
+        <form id="memberForm" action="${pageContext.request.contextPath}/member" method="post">
+          <input type="hidden" id="formAction" name="action" value="add">
+          <input type="hidden" id="memberId" name="id" value="">
+          <div class="mb-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="nom" name="nom" required>
           </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="Email" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                id="Email"
-                required
-              />
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="Equipe" class="form-label">equipe</label>
-              <select class="form-select" id="Equipe" name="equipe" required>
-                <option value="">Slectionner une equipe</option>
-                <!-- Team options will be dynamically added here -->
-              </select>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="Role" class="form-label">Role</label>
-              <select class="form-select" id="Role" name="role" required>
-                <option value="">Selectionner un role</option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
-                <option value="Editor">Editor</option>
-              </select>
-            </div>
+          <div class="mb-3">
+            <label for="prenom" class="form-label">Prenom</label>
+            <input type="text" class="form-control" id="prenom" name="prenom" required>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="saveTask()">
-              Enregistrer
-            </button>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
           </div>
+          <div class="mb-3">
+            <label for="equipe" class="form-label">E�quipe</label>
+            <select class="form-select" id="equipe" name="equipeId" required>
+              <c:forEach items="${equipes}" var="equipe">
+                <option value="${equipe.id}">${equipe.nom}</option>
+              </c:forEach>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-select" id="role" name="role" required>
+              <c:forEach items="${roles}" var="role">
+                <option value="${role}">${role}</option>
+              </c:forEach>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal for Delete Confirmation -->
-<div
-  class="modal fade"
-  id="deleteConfirmModal"
-  tabindex="-1"
-  aria-labelledby="deleteConfirmModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteConfirmModalLabel">
-          Confirmer la suppression
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer cette tâche ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Annuler
-        </button>
-        <button type="button" class="btn btn-danger" onclick="confirmDelete()">
-          Supprimer
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<script>
+  function showAddMemberModal() {
+    document.getElementById('memberModalLabel').textContent = 'Ajouter un Membre';
+    document.getElementById('formAction').value = 'add';
+    document.getElementById('memberId').value = '';
+    document.getElementById('memberForm').reset();
+    var modal = new bootstrap.Modal(document.getElementById('memberModal'));
+    modal.show();
+  }
+
+  function editMember(id, nom, prenom, email, equipeId, role) {
+    console.log(id, nom, prenom, email, equipeId, role);
+    document.getElementById('memberModalLabel').textContent = 'Modifier un Membre';
+    document.getElementById('formAction').value = 'edit';
+    document.getElementById('memberId').value = id;
+    document.getElementById('nom').value = nom;
+    document.getElementById('prenom').value = prenom;
+    document.getElementById('email').value = email;
+    document.getElementById('equipe').value = equipeId;
+    document.getElementById('role').value = role;
+    var modal = new bootstrap.Modal(document.getElementById('memberModal'));
+    modal.show();
+  }
+
+  function deleteMember(id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce membre ?')) {
+      window.location.href = '${pageContext.request.contextPath}/member?action=delete&id=' + id;
+    }
+  }
+</script>
