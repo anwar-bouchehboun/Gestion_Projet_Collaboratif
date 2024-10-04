@@ -34,7 +34,7 @@ public class TacheImpl implements GeneralInterface<Tache>, MultiInterface<Tache>
             pstmt.setString(1, entity.getTitre());
             pstmt.setString(2, entity.getDescription());
             pstmt.setString(3, entity.getPriorite().name());
-            pstmt.setString(4, entity.getStatut().name());
+            pstmt.setObject(4, entity.getStatut().name());
             pstmt.setDate(5, Date.valueOf(entity.getDateCreation()));
             pstmt.setDate(6, entity.getDateEcheance() != null ? Date.valueOf(entity.getDateEcheance()) : null);
             pstmt.setInt(7, entity.getProjet().getId());

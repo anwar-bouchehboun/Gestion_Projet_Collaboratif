@@ -10,3 +10,7 @@
 2024-10-03 11:44:22 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
 2024-10-03 11:55:07 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
 2024-10-03 11:55:07 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
+2024-10-03 19:42:34 ERROR Projet_Calbo.utilis.LoggerMessage - Erreur lors de la mise à jour du projet: Unknown column 'equipe_id' in 'field list'
+2024-10-03 19:57:57 ERROR Projet_Calbo.utilis.LoggerMessage - Erreur lors de la mise à jour du projet: Unknown column 'equipe_id' in 'field list'
+2024-10-03 19:58:57 INFO  Projet_Calbo.utilis.LoggerMessage - Projet mis à jour avec succès. ID: 3
+2024-10-03 20:02:12 INFO  Projet_Calbo.utilis.LoggerMessage - Projet mis à jour avec succès. ID: 3

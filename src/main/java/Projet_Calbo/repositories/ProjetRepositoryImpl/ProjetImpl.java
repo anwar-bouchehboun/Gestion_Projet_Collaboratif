@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 import Projet_Calbo.config.DatabaseConnection;
 import Projet_Calbo.model.Equipe;
@@ -13,8 +14,9 @@ import Projet_Calbo.model.Projet;
 import Projet_Calbo.model.StatutProjet;
 import Projet_Calbo.repositories.GeneralInterface;
 import Projet_Calbo.repositories.MultiInterface;
+import Projet_Calbo.utilis.LoggerMessage;
 
-public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Projet> {
+public class ProjetImpl implements GeneralInterface<Projet>, MultiInterface<Projet> {
 
     @Override
     public boolean save(Projet entity) {
@@ -37,24 +39,29 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
 
     @Override
     public void update(Projet entity) {
-        String sql = "UPDATE Projet SET nom = ?, description = ?, dateDebut = ?, dateFin = ?, statut = ?, equipe_id = ? WHERE id = ?";
+        System.out.println(entity);
+       String sql = "UPDATE Projet SET nom = ?, description = ?, dateDebut = ?, dateFin = ?, statut = ?, equipe_id = ? WHERE id = ?";
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+            LocalDate dateDebut = entity.getDateDebut();
+            LocalDate dateFin = entity.getDateFin();
+
             statement.setString(1, entity.getNom());
             statement.setString(2, entity.getDescription());
-            statement.setDate(3, Date.valueOf(entity.getDateDebut()));
-            statement.setDate(4, entity.getDateFin() != null ? Date.valueOf(entity.getDateFin()) : null);
-            statement.setObject(5, entity.getStatut().name());
+            statement.setDate(3, dateDebut != null ? java.sql.Date.valueOf(dateDebut) : null);
+            statement.setDate(4, dateFin != null ? java.sql.Date.valueOf(dateFin) : null);
+            statement.setString(5, entity.getStatut() != null ? entity.getStatut().name() : null);
             statement.setInt(6, entity.getEquipe().getId());
             statement.setInt(7, entity.getId());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Projet mis à jour avec succès.");
+                LoggerMessage.info("Projet mis à jour avec succès. ID: " + entity.getId());
             } else {
-                System.out.println("Aucun projet trouvé avec l'ID donné.");
+                LoggerMessage.warn("Aucun projet trouvé avec l'ID: " + entity.getId());
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la mise à jour du projet: " + e.getMessage());
+        	System.out.println(e.getMessage());
+            LoggerMessage.error("Erreur lors de la mise à jour du projet: " + e.getMessage());
         }
     }
 
@@ -79,7 +86,7 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
     public List<Projet> getAll() {
         List<Projet> projets = new ArrayList<>();
         String sql = "SELECT p.*, e.nom AS equipe_nom FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id";
-        
+
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery()) {
 
@@ -96,14 +103,14 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                 if (statutStr != null) {
                     projet.setStatut(StatutProjet.valueOf(statutStr));
                 } else {
-                    projet.setStatut(null); 
+                    projet.setStatut(null);
                 }
 
                 if (resultSet.getObject("equipe_id") != null) {
                     Equipe equipe = new Equipe();
-                    equipe.setId(resultSet.getInt("equipe_id")); 
-                    equipe.setNom(resultSet.getString("equipe_nom")); 
-                    projet.setEquipe(equipe); 
+                    equipe.setId(resultSet.getInt("equipe_id"));
+                    equipe.setNom(resultSet.getString("equipe_nom"));
+                    projet.setEquipe(equipe);
                 } else {
                     projet.setEquipe(null);
                 }
@@ -115,7 +122,6 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         }
         return projets;
     }
-
 
     @Override
     public Projet findById(Integer id) {
@@ -131,7 +137,8 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                 projet.setNom(resultSet.getString("nom"));
                 projet.setDescription(resultSet.getString("description"));
                 projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
-                projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
+                projet.setDateFin(
+                        resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
                 projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
                 Equipe equipe = new Equipe();
                 equipe.setId(resultSet.getInt("equipet_id"));
@@ -142,7 +149,6 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         }
         return projet;
     }
-
 
     @Override
     public List<Projet> getPage(int page, int pageSize) {
@@ -162,11 +168,11 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                     projet.setDateFin(
                             resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
                     projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
-            
+
                     Equipe equipe = new Equipe();
                     equipe.setId(resultSet.getInt("equipe_id"));
                     projet.setEquipe(equipe);
-            
+
                     projets.add(projet);
                 }
             }
