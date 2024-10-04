@@ -158,7 +158,7 @@ public class EquipeServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         System.out.println(id);
-        
+
         List<Equipe> equipes = equipeService.getAll();
         Equipe equipeToDelete = equipes.stream()
                 .filter(e -> e.getId() == id)
