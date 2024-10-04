@@ -25,6 +25,13 @@ public void deleteEquipe(Members e) {
 public void updateEquipe(Members e) {
 	impMembers.update(e);
 }
+public List<Members> getMemberPage(int page, int pageSize) {
+    return impMembers.getPage(page, pageSize);
+}
 
+public int getTotalPages(int pageSize) {
+    long totalMembers = impMembers.count();
+    return (int) Math.ceil((double) totalMembers / pageSize);
+}
 
 }
