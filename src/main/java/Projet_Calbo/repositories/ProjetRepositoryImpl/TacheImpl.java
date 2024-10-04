@@ -205,37 +205,21 @@ public class TacheImpl implements GeneralInterface<Tache>, MultiInterface<Tache>
 
     public List<Tache> getTasksByMemberId(int memberId) {
         List<Tache> tasks = new ArrayList<>();
-        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            String sql = "SELECT * FROM taches WHERE membre_id = ?";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, memberId);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        Tache task = new Tache();
-                        task.setId(resultSet.getInt("id"));
-                        task.setTitre(resultSet.getString("titre"));
-                        task.setDescription(resultSet.getString("description"));
-                        task.setPriorite(PrioriteEnum.valueOf(resultSet.getString("priorite")));
-                        task.setStatut(Statut.valueOf(resultSet.getString("statut")));
-                        task.setDateCreation(resultSet.getDate("date_creation").toLocalDate());
-                        task.setDateEcheance(resultSet.getDate("date_echeance").toLocalDate());
-
-                        // Assuming you have methods to get Projet and Members by ID
-                        int projetId = resultSet.getInt("projet_id");
-                        Projet projet = new Projet();
-                        projet.setId(projetId);
-                        task.setProjet(projet);
-
-                        Members membre = new Members();
-                        membre.setId(memberId);
-                        task.setMembre(membre);
-
-                        tasks.add(task);
-                    }
+        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom " +
+                     "FROM Tache t " +
+                     "JOIN Projet p ON t.projet_id = p.id " +
+                     "JOIN Membre m ON t.membre_id = m.id " +
+                     "WHERE t.membre_id = ?";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, memberId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    tasks.add(extractTacheFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error getting tasks for member ID: " + memberId, e);
         }
         return tasks;
     }
