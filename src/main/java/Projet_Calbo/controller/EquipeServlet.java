@@ -57,6 +57,7 @@ public class EquipeServlet extends HttpServlet {
                 break;
             case "updateTeam":
                 updateTeam(request, response);
+                break;
             case "delete":
                 deleteTeam(request, response);
                 break;
