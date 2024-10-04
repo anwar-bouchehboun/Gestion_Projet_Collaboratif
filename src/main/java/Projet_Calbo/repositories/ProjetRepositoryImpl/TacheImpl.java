@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +15,6 @@ import Projet_Calbo.config.DatabaseConnection;
 import Projet_Calbo.model.Members;
 import Projet_Calbo.model.PrioriteEnum;
 import Projet_Calbo.model.Projet;
-import Projet_Calbo.model.Role;
 import Projet_Calbo.model.Statut;
 import Projet_Calbo.model.Tache;
 import Projet_Calbo.repositories.GeneralInterface;
@@ -206,64 +203,40 @@ public class TacheImpl implements GeneralInterface<Tache>, MultiInterface<Tache>
         return 0;
     }
 
-    public List<Members> getMembersForProject(int projectId) {
-        List<Members> members = new ArrayList<>();
-        String sql = "SELECT m.* FROM Membre m " +
-                "JOIN Projet p ON m.equipe_id = p.equipe_id " +
-                "WHERE p.id = ?";
-
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, projectId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Members member = new Members();
-                    member.setId(rs.getInt("id"));
-                    member.setNom(rs.getString("nom"));
-                    member.setPrenom(rs.getString("prenom"));
-                    member.setEmail(rs.getString("email"));
-                    member.setRole(Role.valueOf(rs.getString("role")));
-                    members.add(member);
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error retrieving members for project", e);
-        }
-        return members;
-    }
-
-    public List<Tache> getTasksForMember(Members member, Projet projet) {
+    public List<Tache> getTasksByMemberId(int memberId) {
         List<Tache> tasks = new ArrayList<>();
-        String sql = "SELECT t.*, p.nom as projet_nom, m.nom as membre_nom, m.prenom as membre_prenom " +
-                "FROM Tache t " +
-                "JOIN Projet p ON t.projet_id = p.id " +
-                "JOIN Membre m ON t.membre_id = m.id " +
-                "WHERE t.membre_id = ? AND t.projet_id = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, member.getId());
-            pstmt.setInt(2, projet.getId());
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    tasks.add(extractTacheFromResultSet(rs));
+        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
+            String sql = "SELECT * FROM taches WHERE membre_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, memberId);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Tache task = new Tache();
+                        task.setId(resultSet.getInt("id"));
+                        task.setTitre(resultSet.getString("titre"));
+                        task.setDescription(resultSet.getString("description"));
+                        task.setPriorite(PrioriteEnum.valueOf(resultSet.getString("priorite")));
+                        task.setStatut(Statut.valueOf(resultSet.getString("statut")));
+                        task.setDateCreation(resultSet.getDate("date_creation").toLocalDate());
+                        task.setDateEcheance(resultSet.getDate("date_echeance").toLocalDate());
+
+                        // Assuming you have methods to get Projet and Members by ID
+                        int projetId = resultSet.getInt("projet_id");
+                        Projet projet = new Projet();
+                        projet.setId(projetId);
+                        task.setProjet(projet);
+
+                        Members membre = new Members();
+                        membre.setId(memberId);
+                        task.setMembre(membre);
+
+                        tasks.add(task);
+                    }
                 }
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error retrieving tasks for member and project", e);
+            e.printStackTrace();
         }
         return tasks;
     }
-
-    public Map<Members, List<Tache>> getMembersAndTasksForProject(Projet projet) {
-        Map<Members, List<Tache>> memberTaskMap = new HashMap<>();
-        List<Members> members = getMembersForProject(projet.getId());
-
-        for (Members member : members) {
-            List<Tache> tasks = getTasksForMember(member, projet);
-            memberTaskMap.put(member, tasks);
-        }
-
-        return memberTaskMap;
-    }
-
 }

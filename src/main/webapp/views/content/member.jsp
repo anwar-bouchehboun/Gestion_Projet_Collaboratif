@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <style>
         body {
@@ -169,6 +168,9 @@
                                                 <button class="btn btn-icon btn-delete" onclick="deleteMember(${member.id})" title="Supprimer">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
+                                                <button class="btn btn-icon btn-info" onclick="viewMemberTasks(${member.id})" title="View Tasks">
+                                                    <i class="bi bi-list-task"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -312,6 +314,10 @@
         function saveMember() {
             document.getElementById('memberForm').submit();
         }
+        function viewMemberTasks(memberId) {
+            window.location.href = '${pageContext.request.contextPath}/member-tasks?memberId=' + memberId;
+        }
+    </script>
     </script>
 </body>
 </html>
