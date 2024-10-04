@@ -90,7 +90,7 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 	public List<Members> getAll() {
 		List<Members> membersList = new ArrayList<>();
 		// Using an alias for equipe.nom to avoid confusion in the ResultSet
-		String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.nom AS equipe_nom "
+		String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.nom AS equipe_nom,equipe.id "
 				+
 				"FROM membre JOIN equipe ON membre.equipe_id = equipe.id";
 
@@ -107,6 +107,7 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 				member.setRole(Role.valueOf(resultSet.getString("role")));
 
 				Equipe equipe = new Equipe();
+				equipe.setId(resultSet.getInt("equipe_id"));
 				equipe.setNom(resultSet.getString("equipe_nom"));
 				member.setEquipe(equipe);
 
@@ -154,7 +155,7 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 	@Override
 	public List<Members> getPage(int page, int pageSize) {
 		List<Members> membersList = new ArrayList<>();
-		String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.nom AS equipe_nom "
+		String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.id  AS equipe_id, equipe.nom AS equipe_nom "
 				+
 				"FROM membre JOIN equipe ON membre.equipe_id = equipe.id " +
 				"LIMIT ? OFFSET ?";
@@ -173,6 +174,8 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 					member.setRole(Role.valueOf(resultSet.getString("role")));
 
 					Equipe equipe = new Equipe();
+					equipe.setId(resultSet.getInt(23));
+
 					equipe.setNom(resultSet.getString("equipe_nom"));
 					member.setEquipe(equipe);
 
