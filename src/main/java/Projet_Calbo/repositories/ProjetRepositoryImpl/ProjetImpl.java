@@ -122,7 +122,20 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         }
         return projets;
     }
-
+    
+    @Override
+    public long count() {
+        String sql = "SELECT COUNT(*) FROM projet";
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors du comptage des projets: " + e.getMessage());
+        }
+        return 0;
+    }
 
     @Override
     public Projet findById(Integer id) {

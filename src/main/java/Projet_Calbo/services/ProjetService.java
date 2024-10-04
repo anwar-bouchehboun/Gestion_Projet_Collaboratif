@@ -37,4 +37,11 @@ public class ProjetService {
         return projetRepository.findByName(name);
     }
 
+    public List<Projet> getProjetsPagines(int page, int pageSize) {
+        return projetRepository.getPage(page, pageSize);
+    }
+    
+    public long getNombreTotalProjets() {
+        return projetRepository.count();
+    }
 }
