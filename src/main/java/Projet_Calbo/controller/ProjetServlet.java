@@ -10,12 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Projet_Calbo.model.Projet;
+import Projet_Calbo.model.Statut;
 import Projet_Calbo.services.ProjetService;
 
 
 public class ProjetServlet extends HttpServlet {
 
-    private ProjetService projetService;
+    /**
+	 * 
+	 */
+	
+	private ProjetService projetService;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -25,12 +30,15 @@ public class ProjetServlet extends HttpServlet {
         projetService = new ProjetService();
     }
 
+    
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+    	List<Projet> projects=  projetService.getAllProjets();
+    	System.out.println(projects);
+    	request.setAttribute("projets",projects);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/projet.jsp");
         dispatcher.forward(request, response);
         

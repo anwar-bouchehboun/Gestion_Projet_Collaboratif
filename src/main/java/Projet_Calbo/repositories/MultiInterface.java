@@ -8,9 +8,7 @@ public interface MultiInterface<T> {
 	
     List<T> findByName(String name);
     
-    int getTotalMembresByProjet(Long projetId);
-    
-    int getTotalTachesByProjet(Long projetId);
+   
 
     
 }

@@ -1,6 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
     <style>
       body {
@@ -240,16 +240,18 @@
                             </tr>
                         </thead>
 <tbody>
-        <c:forEach var="projet" items="${projets}">
-                <tr>
-                    <td>${projet.id}</td>
-                    <td>${projet.nom}</td>
-                    <td>${projet.dateDebut}</td>
-                    <td>${projet.dateFin}</td>
-                    <td>${projet.totalTasks}</td>
-                    <td>${projet.totalMembers}</td>
+       
+        <c:forEach var='assam' items="${projets}">
+     
+      <tr>
+                    <td>${assam.id}</td>
+                    <td>${assam.nom}</td>
+                    <td>${assam.statut}</td>
+                    <td>${assam.dateDebut}</td>
+                    <td>${assam.dateFin}</td>
+                    
                 </tr>
-        </c:forEach>
+      </c:forEach>
         </tbody>
                     </table>
                 </div>
