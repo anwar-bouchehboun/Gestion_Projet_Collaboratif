@@ -95,7 +95,7 @@ public class EquipeServlet extends HttpServlet {
                     "Une erreur s'est produite lors de la récupération des équipes: " + e.getMessage());
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/content/equipe.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/equipe.jsp");
         dispatcher.forward(request, response);
     }
 
