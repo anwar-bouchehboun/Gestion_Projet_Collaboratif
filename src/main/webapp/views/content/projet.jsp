@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -217,7 +217,7 @@
 
         <div class="text-end mb-3">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
-                <i class="bi bi-plus-circle"></i> CrÃ©er un nouveau Projet
+                <i class="bi bi-plus-circle"></i> Créer un nouveau Projet
             </button>
         </div>
 
@@ -249,8 +249,8 @@
                                 <th scope="col">Nom</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Statut</th>
-                                <th scope="col">Date de crÃ©ation</th>
-                                <th scope="col">Date d'Ã©chance</th>
+                                <th scope="col">Date de création</th>
+                                <th scope="col">Date d'échance</th>
                                 <th scope="col">Membres</th>
                                 <th scope="col">Taches</th>                                
                                 <th scope="col">Actions</th>
@@ -278,7 +278,7 @@
                             <tr>
                                 <td>test</td>
                                 <td>test</td>
-                                <td>TerminÃ©</td>
+                                <td>Terminé</td>
                                 <td>20/10/2020</td>
                                 <td>20/10/2020</td>                         
                                 <td>20</td>
@@ -313,7 +313,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">CrÃ©er/Modifier un Projet</h5>
+                    <h5 class="modal-title" id="taskModalLabel">Créer/Modifier un Projet</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -330,19 +330,19 @@
                             <div class="mb-4">
                                 <label for="Role" class="form-label">Statut</label>
                                 <select class="form-select" id="Role" name="role" required>
-                                    <option value="">SÃ©lectionner un statut</option>
+                                    <option value="">Sélectionner un statut</option>
                                     <option value="Admin">En cours</option>
-                                    <option value="User">TerminÃ©e</option>
-                                    <option value="Editor">AnnulÃ©</option>
+                                    <option value="User">Terminée</option>
+                                    <option value="Editor">Annulé</option>
                                 </select>
                             </div>
                             <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="Nom" class="form-label">Date de crÃ©ation</label>
+                                <label for="Nom" class="form-label">Date de création</label>
                                 <input type="date" class="form-control" name="nom" id="Nom" required />
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="Prenom" class="form-label">Date D'Ã©chance</label>
+                                <label for="Prenom" class="form-label">Date D'échance</label>
                                 <input type="date" class="form-control" name="prenom" id="Prenom" required />
                             </div>
                         </div>
@@ -363,7 +363,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ÃŠtes-vous sÃ»r de vouloir supprimer ce Projet ?
+                    Êtes-vous sûr de vouloir supprimer ce Projet ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

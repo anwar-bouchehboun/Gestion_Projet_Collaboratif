@@ -9,7 +9,6 @@
     }
     .container-fluid {
         max-width: 1200px;
-        margin-top: 40px;
     }
     .card {
         border: none;
@@ -85,15 +84,15 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-center mb-4">Gestion des Tches</h2>
+            <h2 class="text-center my-4">Gestion des Taches</h2>
             <div class="text-end mb-3">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
-                    <i class="bi bi-plus-circle"></i> Crer une nouvelle Tche
+                    <i class="bi bi-plus-circle"></i> Creer une nouvelle Tache
                 </button>
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4>Liste des Tches</h4>
+                    <h4>Liste des Taches</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -231,7 +230,7 @@
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="editTaskModalLabel">Modifier la tche</h5>
+              <h5 class="modal-title" id="editTaskModalLabel">Modifier la tache</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
