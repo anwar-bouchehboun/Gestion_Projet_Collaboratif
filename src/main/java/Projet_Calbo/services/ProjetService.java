@@ -32,4 +32,11 @@ public class ProjetService {
     public Projet getById(int id) {
         return projetRepository.findById(id); 
     }
+    public List<Projet> getProjetsPagines(int page, int pageSize) {
+        return projetRepository.getPage(page, pageSize);
+    }
+    
+    public long getNombreTotalProjets() {
+        return projetRepository.count();
+    }
 }
