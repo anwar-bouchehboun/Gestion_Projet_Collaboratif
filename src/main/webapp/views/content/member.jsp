@@ -287,7 +287,6 @@
   }
 
   function editMember(id, nom, prenom, email, equipeId, role) {
-    console.log(id, nom, prenom, email, equipeId, role);
     document.getElementById('memberModalLabel').textContent = 'Modifier un Membre';
     document.getElementById('formAction').value = 'edit';
     document.getElementById('memberId').value = id;
