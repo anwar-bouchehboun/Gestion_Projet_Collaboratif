@@ -1,23 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestion des Projets</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+
+
     <style>
       body {
         background-color: #f0f2f5;
@@ -209,7 +193,6 @@
     </style>
   </head>
 
-  <body>
   <div class="container">
         <h2 class="text-center mb-4">Gestion des Projets</h2>
 
@@ -256,44 +239,18 @@
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="taskTableBody">
-                            <tr>
-                                <td>Projet</td>
-                                <td>projet</td>
-                                <td>En cours</td>
-                                <td>20/10/2020</td>
-                                <td>20/10/2020</td>                         
-                                <td>20</td>
-                                <td>20</td>
-                                <td class="d-flex flex-row gap-1">
-                                             <button class="btn btn-icon btn-edit me-1"  title="Modifier">
-                                                      <i class="bi bi-pencil"></i>
-                                             </button>
-                                                      <button class="btn btn-icon btn-delete"  title="Supprimer">
-                                                       <i class="bi bi-trash"></i>
-                                           </button>
-                                  
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>Terminé</td>
-                                <td>20/10/2020</td>
-                                <td>20/10/2020</td>                         
-                                <td>20</td>
-                                <td>20</td>
-                                 <td class="d-flex flex-row gap-1">
-                                      <button class="btn btn-icon btn-edit me-1" onclick="editTask(${task.id})" title="Modifier">
-                                                      <i class="bi bi-pencil"></i>
-                                             </button>
-                                                      <button class="btn btn-icon btn-delete" onclick="deleteTask(${task.id})" title="Supprimer">
-                                                       <i class="bi bi-trash"></i>
-                                           </button>
-                                  
-                                </td>
-                            </tr>
-                        </tbody>
+<tbody>
+        <c:forEach var="projet" items="${projets}">
+                <tr>
+                    <td>${projet.id}</td>
+                    <td>${projet.nom}</td>
+                    <td>${projet.dateDebut}</td>
+                    <td>${projet.dateFin}</td>
+                    <td>${projet.totalTasks}</td>
+                    <td>${projet.totalMembers}</td>
+                </tr>
+        </c:forEach>
+        </tbody>
                     </table>
                 </div>
             </div>
@@ -382,10 +339,4 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-</body>
-</html>
+  

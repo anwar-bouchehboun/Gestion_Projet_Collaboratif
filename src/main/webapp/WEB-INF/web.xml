@@ -36,5 +36,16 @@
         <servlet-name>TacheServlet</servlet-name>
         <url-pattern>/tache</url-pattern>
     </servlet-mapping>
+    <servlet>
+    <servlet-name>ProjetServlet</servlet-name>
+    <servlet-class>Projet_Calbo.controller.ProjetServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ProjetServlet</servlet-name>
+    <url-pattern>/projet</url-pattern>
+</servlet-mapping>
 
 </web-app>
+
+
+
