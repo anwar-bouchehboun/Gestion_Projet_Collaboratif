@@ -37,4 +37,13 @@
         <url-pattern>/tache</url-pattern>
     </servlet-mapping>
 
+<servlet>
+    <servlet-name>MemberTasksServlet</servlet-name>
+    <servlet-class>Projet_Calbo.controller.MemberTasksServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>MemberTasksServlet</servlet-name>
+    <url-pattern>/member-tasks</url-pattern>
+</servlet-mapping>
+
 </web-app>

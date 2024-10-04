@@ -85,19 +85,31 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
+<<<<<<< HEAD
       <h2 class="text-center mb-4">Gestion des T�ches</h2>
+=======
+      <h2 class="text-center mb-4">Gestion des Taches</h2>
+>>>>>>> 38e349c0a5a26235feab8412d19a43f72a882059
       <div class="text-end mb-3">
         <button
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#taskModal"
         >
+<<<<<<< HEAD
           <i class="bi bi-plus-circle"></i> Cr�er une nouvelle T�che
+=======
+          <i class="bi bi-plus-circle"></i> Creer une nouvelle Tache
+>>>>>>> 38e349c0a5a26235feab8412d19a43f72a882059
         </button>
       </div>
       <div class="card">
         <div class="card-header">
+<<<<<<< HEAD
           <h4>Liste des T�ches</h4>
+=======
+          <h4>Liste des Taches</h4>
+>>>>>>> 38e349c0a5a26235feab8412d19a43f72a882059
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -106,11 +118,19 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 <tr>
                   <th>Titre</th>
                   <th>Description</th>
+<<<<<<< HEAD
                   <th>Priorit�</th>
                   <th>Statut</th>
                   <th>Date d'�ch�ance</th>
                   <th>Projet</th>
                   <th>Membre assign�</th>
+=======
+                  <th>Priorite</th>
+                  <th>Statut</th>
+                  <th>Date d'echeance</th>
+                  <th>Projet</th>
+                  <th>Membre assigne</th>
+>>>>>>> 38e349c0a5a26235feab8412d19a43f72a882059
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -143,7 +163,11 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                       <a
                         href="<c:url value='/tache?action=delete&id=${tache.id}'/>"
                         class="btn btn-sm btn-delete"
+<<<<<<< HEAD
                         onclick="return confirm('�tes-vous s�r de vouloir supprimer cette t�che ?');"
+=======
+                        onclick="return confirm('�tes-vous sur de vouloir supprimer cette tache ?');"
+>>>>>>> 38e349c0a5a26235feab8412d19a43f72a882059
                       >
                         <i class="bi bi-trash"></i>
                       </a>

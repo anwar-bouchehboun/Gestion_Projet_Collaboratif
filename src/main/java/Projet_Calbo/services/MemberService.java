@@ -36,5 +36,7 @@ public int getTotalPages(int pageSize) {
     long totalMembers = impMembers.count();
     return (int) Math.ceil((double) totalMembers / pageSize);
 }
-
+public Members getMemberById(int id) {
+	return impMembers.findById(id);
+}
 }

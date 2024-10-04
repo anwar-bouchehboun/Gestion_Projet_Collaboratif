@@ -98,8 +98,6 @@ public class MemberServlet extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("errorMessage",
 					"Une erreur s'est produite lors de la récupération des membres: " + e.getMessage());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/views/error.jsp");
-			dispatcher.forward(request, response);
 		}
 	}
 

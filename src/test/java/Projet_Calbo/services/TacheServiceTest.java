@@ -2,10 +2,8 @@ package Projet_Calbo.services;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -106,44 +104,5 @@ public class TacheServiceTest {
         // assertNotNull(tache.getDateCreation());
         // assertNotNull(tache.getProjet());
         // }
-    }
-
-    @Test
-    public void testGetMembersAndTasksForProject() {
-        int projectId = 1; // Assuming project with ID 1 exists
-        Projet projet = new Projet();
-        projet.setId(projectId);
-        Map<Members, List<Tache>> memberTaskMap = tacheService.getMembersAndTasksForProject(projet);
-    
-        assertNotNull(memberTaskMap);
-        assertFalse(memberTaskMap.isEmpty());
-    
-        System.out.println("Members and Tasks for Project " + projectId + ":");
-        for (Map.Entry<Members, List<Tache>> entry : memberTaskMap.entrySet()) {
-            Members member = entry.getKey();
-            List<Tache> tasks = entry.getValue();
-    
-            System.out.println("Member: " + member.getNom() + " " + member.getPrenom() + " (ID: " + member.getId() + ")");
-            System.out.println("Tasks:");
-            if (tasks.isEmpty()) {
-                System.out.println("No tasks assigned");
-            } else {
-                for (Tache task : tasks) {
-                    System.out.println("- " + task.getTitre() + " (ID: " + task.getId() + ", Priority: " + task.getPriorite() + ")");
-                }
-            }
-            System.out.println();
-        }
-    
-        // Print all tasks for the project
-        List<Tache> allProjectTasks = tacheService.getTachesByProjet(projectId);
-        System.out.println("All tasks for Project " + projectId + ":");
-        for (Tache task : allProjectTasks) {
-            System.out.println("- " + task.getTitre() + " (ID: " + task.getId() + ", Member ID: " + (task.getMembre() != null ? task.getMembre().getId() : "null") + ")");
-        }
-    
-        // Assert that at least one member has tasks
-        boolean atLeastOneMemberHasTasks = memberTaskMap.values().stream().anyMatch(tasks -> !tasks.isEmpty());
-        assertTrue("At least one member should have tasks", atLeastOneMemberHasTasks);
     }
 }

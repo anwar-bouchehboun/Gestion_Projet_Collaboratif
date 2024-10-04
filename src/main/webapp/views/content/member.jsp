@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <style>
         body {
@@ -145,10 +144,10 @@
                         <thead>
                             <tr>
                                 <th scope="col">Nom</th>
-                                <th scope="col">Prénom</th>
+                                <th scope="col">Prenom</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Rôle</th>
-                                <th scope="col">Équipe</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Equipe</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -168,6 +167,9 @@
                                                 </button>
                                                 <button class="btn btn-icon btn-delete" onclick="deleteMember(${member.id})" title="Supprimer">
                                                     <i class="bi bi-trash"></i>
+                                                </button>
+                                                <button class="btn btn-icon btn-info" onclick="viewMemberTasks(${member.id})" title="View Tasks">
+                                                    <i class="bi bi-list-task"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -216,7 +218,7 @@
                                 <input type="text" class="form-control" id="nom" name="nom" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="prenom" class="form-label">Prénom</label>
+                                <label for="prenom" class="form-label">Prenom</label>
                                 <input type="text" class="form-control" id="prenom" name="prenom" required>
                             </div>
                         </div>
@@ -226,7 +228,7 @@
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="role" class="form-label">Rôle</label>
+                                <label for="role" class="form-label">Role</label>
                                 <select class="form-select" id="role" name="role" required>
                                     <c:forEach items="${roles}" var="role">
                                         <option value="${role}">${role}</option>
@@ -235,7 +237,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="equipeId" class="form-label">Équipe</label>
+                            <label for="equipeId" class="form-label">equipe</label>
                             <select class="form-select" id="equipeId" name="equipeId" required>
                                 <c:forEach items="${equipes}" var="equipe">
                                     <option value="${equipe.id}">${equipe.nom}</option>
@@ -312,6 +314,10 @@
         function saveMember() {
             document.getElementById('memberForm').submit();
         }
+        function viewMemberTasks(memberId) {
+            window.location.href = '${pageContext.request.contextPath}/member-tasks?memberId=' + memberId;
+        }
+    </script>
     </script>
 </body>
 </html>
