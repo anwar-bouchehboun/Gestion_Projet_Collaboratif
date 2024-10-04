@@ -116,6 +116,8 @@ public class EquipeServlet extends HttpServlet {
 
         if (equipe != null) {
             request.setAttribute("equipe", equipe);
+            // Add this line for debugging
+            System.out.println("Editing equipe: " + equipe.getId() + " - " + equipe.getNom());
             RequestDispatcher dispatcher = request.getRequestDispatcher("/views/equipe.jsp");
             dispatcher.forward(request, response);
         } else {
@@ -138,6 +140,9 @@ public class EquipeServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String newName = request.getParameter("newName");
+        // Add these lines for debugging
+        System.out.println("Updating equipe - ID: " + id + ", New Name: " + newName);
+
         List<Equipe> equipes = equipeService.getAll();
         Equipe equipeToUpdate = equipes.stream()
                 .filter(e -> e.getId() == id)
