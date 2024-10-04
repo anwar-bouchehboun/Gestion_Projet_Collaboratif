@@ -218,7 +218,7 @@
                                 <input type="text" class="form-control" id="nom" name="nom" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="prenom" class="form-label">Prénom</label>
+                                <label for="prenom" class="form-label">Prenom</label>
                                 <input type="text" class="form-control" id="prenom" name="prenom" required>
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="role" class="form-label">Rôle</label>
+                                <label for="role" class="form-label">Role</label>
                                 <select class="form-select" id="role" name="role" required>
                                     <c:forEach items="${roles}" var="role">
                                         <option value="${role}">${role}</option>
@@ -237,7 +237,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="equipeId" class="form-label">Équipe</label>
+                            <label for="equipeId" class="form-label">equipe</label>
                             <select class="form-select" id="equipeId" name="equipeId" required>
                                 <c:forEach items="${equipes}" var="equipe">
                                     <option value="${equipe.id}">${equipe.nom}</option>
