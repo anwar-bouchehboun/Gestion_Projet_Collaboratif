@@ -155,9 +155,8 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 	@Override
 	public List<Members> getPage(int page, int pageSize) {
 		List<Members> membersList = new ArrayList<>();
-		String sql = "SELECT membre.id, membre.nom AS membre_nom, membre.prenom, membre.email, membre.role, equipe.id  AS equipe_id, equipe.nom AS equipe_nom "
-				+
-				"FROM membre JOIN equipe ON membre.equipe_id = equipe.id " +
+		String sql = "SELECT m.id, m.nom, m.prenom, m.email, m.role, e.id AS equipe_id, e.nom AS equipe_nom " +
+				"FROM Membre m LEFT JOIN Equipe e ON m.equipe_id = e.id " +
 				"LIMIT ? OFFSET ?";
 
 		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -168,14 +167,13 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 				while (resultSet.next()) {
 					Members member = new Members();
 					member.setId(resultSet.getInt("id"));
-					member.setNom(resultSet.getString("membre_nom"));
+					member.setNom(resultSet.getString("nom"));
 					member.setPrenom(resultSet.getString("prenom"));
 					member.setEmail(resultSet.getString("email"));
 					member.setRole(Role.valueOf(resultSet.getString("role")));
 
 					Equipe equipe = new Equipe();
-					equipe.setId(resultSet.getInt(23));
-
+					equipe.setId(resultSet.getInt("equipe_id"));
 					equipe.setNom(resultSet.getString("equipe_nom"));
 					member.setEquipe(equipe);
 
@@ -191,7 +189,7 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 
 	@Override
 	public long count() {
-		String sql = "SELECT COUNT(*) FROM membre";
+		String sql = "SELECT COUNT(*) FROM Membre";
 		try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
 				ResultSet resultSet = statement.executeQuery()) {
 			if (resultSet.next()) {

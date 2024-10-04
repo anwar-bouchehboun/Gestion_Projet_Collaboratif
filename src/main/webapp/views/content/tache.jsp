@@ -242,20 +242,24 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <h2 class="text-center mb-4">Gestion des T√¢ches</h2>
+      <h2 class="text-center mb-4">Gestion des T‚ches</h2>
       <div class="text-end mb-3">
         <button
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#taskModal"
         >
-          <i class="bi bi-plus-circle"></i> Cr√©er une nouvelle T√¢che
+          <i class="bi bi-plus-circle"></i> CrÈer une nouvelle T‚che
         </button>
       </div>
       <div class="card">
         <div class="card-header">
+<<<<<<< HEAD
           <h4>Liste des T√¢ches</h4>
 >>>>>>> 3a412fab005dd30a542ff3bd0ad148401ade0edc
+=======
+          <h4>Liste des T‚ches</h4>
+>>>>>>> 156a0e78556df07d3a607bd8c3bb1ab8cade5995
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -264,11 +268,11 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 <tr>
                   <th>Titre</th>
                   <th>Description</th>
-                  <th>Priorit√©</th>
+                  <th>PrioritÈ</th>
                   <th>Statut</th>
-                  <th>Date d'√©ch√©ance</th>
+                  <th>Date d'ÈchÈance</th>
                   <th>Projet</th>
-                  <th>Membre assign√©</th>
+                  <th>Membre assignÈ</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -301,7 +305,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                       <a
                         href="<c:url value='/tache?action=delete&id=${tache.id}'/>"
                         class="btn btn-sm btn-delete"
-                        onclick="return confirm('√ätes-vous s√ªr de vouloir supprimer cette t√¢che ?');"
+                        onclick="return confirm(' tes-vous s˚r de vouloir supprimer cette t‚che ?');"
                       >
                         <i class="bi bi-trash"></i>
                       </a>
@@ -405,7 +409,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="taskModalLabel">
-          Cr√©er une nouvelle t√¢che
+          CrÈer une nouvelle t‚che
         </h5>
         <button
           type="button"
@@ -437,7 +441,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             ></textarea>
           </div>
           <div class="mb-3">
-            <label for="priorite" class="form-label">Priorit√©</label>
+            <label for="priorite" class="form-label">PrioritÈ</label>
             <select class="form-select" id="priorite" name="priorite" required>
               <c:forEach var="priorite" items="${priorites}">
                 <option value="${priorite}">${priorite}</option>
@@ -454,7 +458,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           </div>
           <div class="mb-3">
             <label for="dateCreation" class="form-label"
-              >Date de cr√©ation</label
+              >Date de crÈation</label
             >
             <input
               type="date"
@@ -465,7 +469,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             />
           </div>
           <div class="mb-3">
-            <label for="dateEcheance" class="form-label">Date d'√©ch√©ance</label>
+            <label for="dateEcheance" class="form-label">Date d'ÈchÈance</label>
             <input
               type="date"
               class="form-control"
@@ -483,7 +487,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             </select>
           </div>
           <div class="mb-3">
-            <label for="membreId" class="form-label">Membre assign√©</label>
+            <label for="membreId" class="form-label">Membre assignÈ</label>
             <select class="form-select" id="membreId" name="membreId" required>
               <c:forEach var="membre" items="${members}">
                 <option value="${membre.id}">
@@ -492,7 +496,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               </c:forEach>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary">Cr√©er</button>
+          <button type="submit" class="btn btn-primary">CrÈer</button>
         </form>
       </div>
     </div>
@@ -510,7 +514,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editTaskModalLabel">Modifier la t√¢che</h5>
+        <h5 class="modal-title" id="editTaskModalLabel">Modifier la t‚che</h5>
         <button
           type="button"
           class="btn-close"
@@ -541,7 +545,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             ></textarea>
           </div>
           <div class="mb-3">
-            <label for="editPriorite" class="form-label">Priorit√©</label>
+            <label for="editPriorite" class="form-label">PrioritÈ</label>
             <select
               class="form-select"
               id="editPriorite"
@@ -563,7 +567,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           </div>
           <div class="mb-3">
             <label for="editDateCreation" class="form-label"
-              >Date de cr√©ation</label
+              >Date de crÈation</label
             >
             <input
               type="date"
@@ -575,7 +579,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           </div>
           <div class="mb-3">
             <label for="editDateEcheance" class="form-label"
-              >Date d'√©ch√©ance</label
+              >Date d'ÈchÈance</label
             >
             <input
               type="date"
@@ -599,7 +603,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             </select>
           </div>
           <div class="mb-3">
-            <label for="editMembreId" class="form-label">Membre assign√©</label>
+            <label for="editMembreId" class="form-label">Membre assignÈ</label>
             <select
               class="form-select"
               id="editMembreId"

@@ -18,7 +18,6 @@
 2024-10-03 19:58:36 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
 2024-10-03 20:05:04 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
 2024-10-03 20:05:04 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
-<<<<<<< HEAD
 2024-10-04 10:58:35 WARN  Projet_Calbo.utilis.LoggerMessage - No member found with the given ID.
 2024-10-04 10:58:35 INFO  Projet_Calbo.utilis.LoggerMessage - update Members
 2024-10-04 10:58:35 WARN  Projet_Calbo.utilis.LoggerMessage - No member found with the given ID.
@@ -31,10 +30,8 @@
 2024-10-04 12:22:36 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
 2024-10-04 12:40:47 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
 2024-10-04 12:40:47 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
-=======
 2024-10-04 12:24:43 INFO  Projet_Calbo.utilis.LoggerMessage - All Data
 2024-10-04 12:27:08 INFO  Projet_Calbo.utilis.LoggerMessage - All Data
->>>>>>> 50e7b873b4d57a23ac44b909c6d1b18e70fa9ff4
 2024-10-04 13:08:14 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
 2024-10-04 13:08:14 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
 2024-10-04 15:05:49 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
@@ -44,3 +41,40 @@
 2024-10-04 15:20:08 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
 2024-10-04 15:21:00 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
 2024-10-04 15:21:00 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.
+2024-10-04 12:57:58 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
+2024-10-04 12:57:58 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'testuser@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:57:58 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
+2024-10-04 12:57:58 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'testuser@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'test0@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'test1@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'test2@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'testuser@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'testuser@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
+2024-10-04 12:58:02 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'testuser@example.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:24 WARN  Projet_Calbo.utilis.LoggerMessage - No member found with the given ID.
+2024-10-04 12:58:24 INFO  Projet_Calbo.utilis.LoggerMessage - update Members
+2024-10-04 12:58:24 INFO  Projet_Calbo.utilis.LoggerMessage - delete Members
+2024-10-04 12:58:24 INFO  Projet_Calbo.utilis.LoggerMessage - save Members
+2024-10-04 12:58:24 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
+2024-10-04 12:58:24 INFO  Projet_Calbo.utilis.LoggerMessage - All Data
+2024-10-04 12:58:27 WARN  Projet_Calbo.utilis.LoggerMessage - No member found with the given ID.
+2024-10-04 12:58:27 INFO  Projet_Calbo.utilis.LoggerMessage - update Members
+2024-10-04 12:58:27 WARN  Projet_Calbo.utilis.LoggerMessage - No member found with the given ID.
+2024-10-04 12:58:27 INFO  Projet_Calbo.utilis.LoggerMessage - delete Members
+2024-10-04 12:58:27 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'a.a@gmail.com' for key 'membre.uk_membre_email'
+2024-10-04 12:58:27 INFO  Projet_Calbo.utilis.LoggerMessage - save Members
+2024-10-04 12:58:27 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
+2024-10-04 12:58:27 INFO  Projet_Calbo.utilis.LoggerMessage - All Data
+2024-10-04 12:59:55 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members page: Column Index out of range, 23 > 7. 
+2024-10-04 13:01:38 WARN  Projet_Calbo.utilis.LoggerMessage - No member found with the given ID.
+2024-10-04 13:01:38 INFO  Projet_Calbo.utilis.LoggerMessage - update Members
+2024-10-04 13:01:38 WARN  Projet_Calbo.utilis.LoggerMessage - No member found with the given ID.
+2024-10-04 13:01:38 INFO  Projet_Calbo.utilis.LoggerMessage - delete Members
+2024-10-04 13:01:38 ERROR Projet_Calbo.utilis.LoggerMessage - Error inserting member: Duplicate entry 'a.a@gmail.com' for key 'membre.uk_membre_email'
+2024-10-04 13:01:38 INFO  Projet_Calbo.utilis.LoggerMessage - save Members
+2024-10-04 13:01:38 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members page: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-5' at line 1
+2024-10-04 13:01:38 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
+2024-10-04 13:01:38 INFO  Projet_Calbo.utilis.LoggerMessage - All Data
+2024-10-04 13:03:31 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members page: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-5' at line 1
