@@ -85,19 +85,19 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <h2 class="text-center mb-4">Gestion des Tâches</h2>
+      <h2 class="text-center mb-4">Gestion des Taches</h2>
       <div class="text-end mb-3">
         <button
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#taskModal"
         >
-          <i class="bi bi-plus-circle"></i> Créer une nouvelle Tâche
+          <i class="bi bi-plus-circle"></i> Creer une nouvelle Tache
         </button>
       </div>
       <div class="card">
         <div class="card-header">
-          <h4>Liste des Tâches</h4>
+          <h4>Liste des Taches</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -106,11 +106,11 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 <tr>
                   <th>Titre</th>
                   <th>Description</th>
-                  <th>Priorité</th>
+                  <th>Priorite</th>
                   <th>Statut</th>
-                  <th>Date d'échéance</th>
+                  <th>Date d'echeance</th>
                   <th>Projet</th>
-                  <th>Membre assigné</th>
+                  <th>Membre assigne</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -143,7 +143,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                       <a
                         href="<c:url value='/tache?action=delete&id=${tache.id}'/>"
                         class="btn btn-sm btn-delete"
-                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');"
+                        onclick="return confirm('ï¿½tes-vous sur de vouloir supprimer cette tache ?');"
                       >
                         <i class="bi bi-trash"></i>
                       </a>
@@ -186,7 +186,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="taskModalLabel">
-          Créer une nouvelle tâche
+          Crï¿½er une nouvelle tï¿½che
         </h5>
         <button
           type="button"
@@ -217,7 +217,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             ></textarea>
           </div>
           <div class="mb-3">
-            <label for="priorite" class="form-label">Priorité</label>
+            <label for="priorite" class="form-label">Prioritï¿½</label>
             <select class="form-select" id="priorite" name="priorite" required>
               <c:forEach var="priorite" items="${priorites}">
                 <option value="${priorite}">${priorite}</option>
@@ -234,7 +234,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           </div>
           <div class="mb-3">
             <label for="dateCreation" class="form-label"
-              >Date de création</label
+              >Date de crï¿½ation</label
             >
             <input
               type="date"
@@ -245,7 +245,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             />
           </div>
           <div class="mb-3">
-            <label for="dateEcheance" class="form-label">Date d'échéance</label>
+            <label for="dateEcheance" class="form-label">Date d'ï¿½chï¿½ance</label>
             <input
               type="date"
               class="form-control"
@@ -263,7 +263,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             </select>
           </div>
           <div class="mb-3">
-            <label for="membreId" class="form-label">Membre assigné</label>
+            <label for="membreId" class="form-label">Membre assignï¿½</label>
             <select class="form-select" id="membreId" name="membreId" required>
               <c:forEach var="membre" items="${members}">
                 <option value="${membre.id}">
@@ -272,7 +272,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               </c:forEach>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary">Créer</button>
+          <button type="submit" class="btn btn-primary">Crï¿½er</button>
         </form>
       </div>
     </div>
@@ -290,7 +290,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editTaskModalLabel">Modifier la tâche</h5>
+        <h5 class="modal-title" id="editTaskModalLabel">Modifier la tï¿½che</h5>
         <button
           type="button"
           class="btn-close"
@@ -321,7 +321,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             ></textarea>
           </div>
           <div class="mb-3">
-            <label for="editPriorite" class="form-label">Priorité</label>
+            <label for="editPriorite" class="form-label">Prioritï¿½</label>
             <select
               class="form-select"
               id="editPriorite"
@@ -343,7 +343,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           </div>
           <div class="mb-3">
             <label for="editDateCreation" class="form-label"
-              >Date de création</label
+              >Date de crï¿½ation</label
             >
             <input
               type="date"
@@ -355,7 +355,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
           </div>
           <div class="mb-3">
             <label for="editDateEcheance" class="form-label"
-              >Date d'échéance</label
+              >Date d'ï¿½chï¿½ance</label
             >
             <input
               type="date"
@@ -379,7 +379,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
             </select>
           </div>
           <div class="mb-3">
-            <label for="editMembreId" class="form-label">Membre assigné</label>
+            <label for="editMembreId" class="form-label">Membre assignï¿½</label>
             <select
               class="form-select"
               id="editMembreId"

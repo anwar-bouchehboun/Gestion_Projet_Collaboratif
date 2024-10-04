@@ -47,6 +47,7 @@ public class MemberTasksServlet extends HttpServlet {
             System.out.println("Debug: Member found: " + member.getNom() + " " + member.getPrenom());
     
             List<Tache> tasks = tacheService.getTasksByMemberId(memberId);
+            
             System.out.println("Debug: Number of tasks fetched: " + (tasks != null ? tasks.size() : "null"));
     
             request.setAttribute("member", member);

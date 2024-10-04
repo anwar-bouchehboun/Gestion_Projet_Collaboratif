@@ -144,10 +144,10 @@
                         <thead>
                             <tr>
                                 <th scope="col">Nom</th>
-                                <th scope="col">Prénom</th>
+                                <th scope="col">Prenom</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Rôle</th>
-                                <th scope="col">Équipe</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Equipe</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
