@@ -32,4 +32,9 @@ public class ProjetService {
     public Projet getById(int id) {
         return projetRepository.findById(id); 
     }
+    
+    public List<Projet> findByName(String name) {
+        return projetRepository.findByName(name);
+    }
+
 }

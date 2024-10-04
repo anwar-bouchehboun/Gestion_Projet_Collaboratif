@@ -9,6 +9,9 @@ import Projet_Calbo.utilis.LoggerMessage;
 import Projet_Calbo.model.Equipe; 
 import Projet_Calbo.model.StatutProjet; 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
+
 public class ProjetServiceTest {
 
     private ProjetService projetService;
@@ -50,6 +53,7 @@ public class ProjetServiceTest {
 
         LoggerMessage.info("Project deleted successfully.");
     }
+    
     @Test
     public void testUpdateProjet() {
         Projet projet = new Projet();
@@ -64,10 +68,7 @@ public class ProjetServiceTest {
         equipe.setId(2); 
         projet.setEquipe(equipe);
 
-
         projetService.updateProjet(projet); 
-
-     
     }
     
     @Test
@@ -79,5 +80,18 @@ public class ProjetServiceTest {
         System.out.println(projet); 
     }
 
-}
+    @Test
+    public void testFindByName() {
+        String searchName = "New Project"; 
+        List<Projet> projets = projetService.findByName(searchName);
+        
+        assertNotNull("The list of projects should not be null.", projets);
+        assertFalse("There should be at least one project found with the given name.", projets.isEmpty());
 
+        projets.forEach(projet -> {
+            assertTrue("Each project should contain the search term in its name.", projet.getNom().contains(searchName));
+            System.out.println(projet); 
+        });
+    }
+
+}
