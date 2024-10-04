@@ -78,10 +78,13 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
     @Override
     public List<Projet> getAll() {
         List<Projet> projets = new ArrayList<>();
-        String sql = "SELECT p.*, e.nom AS equipe_nom FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id";
+        String sql = "SELECT p.*, e.nom AS equipe_nom, " +
+                     "(SELECT COUNT(*) FROM Tache t WHERE t.projet_id = p.id) AS total_taches, " +
+                     "(SELECT COUNT(*) FROM Membre m WHERE m.equipe_id = p.equipe_id) AS total_membres " +
+                     "FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id";
         
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
-                ResultSet resultSet = statement.executeQuery()) {
+             ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 Projet projet = new Projet();
@@ -89,8 +92,7 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                 projet.setNom(resultSet.getString("nom"));
                 projet.setDescription(resultSet.getString("description"));
                 projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
-                projet.setDateFin(
-                        resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
+                projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
 
                 String statutStr = resultSet.getString("statut");
                 if (statutStr != null) {
@@ -108,6 +110,11 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                     projet.setEquipe(null);
                 }
 
+                int totalTaches = resultSet.getInt("total_taches");
+                int totalMembres = resultSet.getInt("total_membres");
+
+                System.out.println("Projet: " + projet.getNom() + " - Tâches: " + totalTaches + ", Membres: " + totalMembres);
+                
                 projets.add(projet);
             }
         } catch (SQLException e) {
@@ -134,7 +141,7 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                 projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
                 projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
                 Equipe equipe = new Equipe();
-                equipe.setId(resultSet.getInt("equipet_id"));
+                equipe.setId(resultSet.getInt("equipe_id"));
                 projet.setEquipe(equipe);
             }
         } catch (SQLException e) {

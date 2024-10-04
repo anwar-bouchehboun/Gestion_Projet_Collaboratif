@@ -7,5 +7,10 @@ public interface MultiInterface<T> {
 	long count();
 	
     List<T> findByName(String name);
+    
+    int getTotalMembresByProjet(Long projetId);
+    
+    int getTotalTachesByProjet(Long projetId);
 
+    
 }
