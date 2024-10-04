@@ -186,7 +186,7 @@
   }
 </style>
 <div class="container">
-  <h2 class="text-center mb-4">Gestion des �quipes</h2>
+  <h2 class="text-center mb-4">Gestion des Equipes</h2>
 
   <!-- Create New Team Form -->
   <div class="mb-4">
@@ -197,14 +197,14 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Entrer Nom �quipe"
+            placeholder="Entrer Nom equipe"
             name="teamName"
             required
           />
         </div>
         <div class="col-auto">
           <button type="submit" class="btn btn-primary mb-3">
-            Ajouter �quipe
+            Ajouter Equipe
           </button>
         </div>
       </div>
@@ -228,7 +228,7 @@
 
   <!-- Equipe List -->
   <div class="card">
-    <div class="card-header">Liste des �quipes</div>
+    <div class="card-header">Liste des equipe</div>
     <div class="card-body p-0">
       <div class="table-responsive">
         <table class="table table-light">
@@ -274,7 +274,7 @@
               <c:otherwise>
                 <tr>
                   <td colspan="2" class="text-center">
-                    Aucune �quipe trouv�e.
+                    Aucune equipe trouve.
                   </td>
                 </tr>
               </c:otherwise>
@@ -314,7 +314,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateModalLabel">Modifier �quipe</h5>
+        <h5 class="modal-title" id="updateModalLabel">Modifier Equipe</h5>
         <button
           type="button"
           class="btn-close"
