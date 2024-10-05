@@ -5,9 +5,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarUnderlineExample">
       <ul class="navbar-nav mx-auto d-flex ">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Accueil</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link " href="http://localhost:8080/Projet_Calbo/equipe">équipes </a>
         </li>
@@ -15,7 +13,7 @@
           <a class="nav-link " href="http://localhost:8080/Projet_Calbo/member">Membres </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Projets</a>
+          <a class="nav-link" href="http://localhost:8080/Projet_Calbo/projet">Projets</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="http://localhost:8080/Projet_Calbo/tache">Taches</a>
