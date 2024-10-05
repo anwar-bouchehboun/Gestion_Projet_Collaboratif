@@ -78,3 +78,5 @@
 2024-10-04 13:01:38 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members: Column 'equipe_id' not found.
 2024-10-04 13:01:38 INFO  Projet_Calbo.utilis.LoggerMessage - All Data
 2024-10-04 13:03:31 ERROR Projet_Calbo.utilis.LoggerMessage - Error retrieving members page: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-5' at line 1
+2024-10-05 22:45:22 INFO  Projet_Calbo.utilis.LoggerMessage - Project deleted successfully.
+2024-10-05 22:45:22 INFO  Projet_Calbo.utilis.LoggerMessage - Fetched all projects successfully.

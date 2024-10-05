@@ -21,7 +21,6 @@ public class ProjetService {
     }
 
     public void updateProjet(Projet projet) {
-    	System.out.println(projet);
 
         projetRepository.update(projet);
     }
@@ -34,21 +33,12 @@ public class ProjetService {
         return projetRepository.getAll();
     }
 
-    public Projet getById(int id) {
-        return projetRepository.findById(id); 
-    }
-    
-    public List<Projet> findByName(String name) {
-        return projetRepository.findByName(name);
-    }
+
 
     public List<Projet> getPage(int page, int pageSize) {
         return projetRepository.getPage(page, pageSize);
     }
     
-    public long getNombreTotalProjets() {
-        return projetRepository.count();
-    }
     
     public List<Equipe> getAllEquipes() {
         return equipeService.getAll();

@@ -49,7 +49,7 @@ public class ProjetServiceTest {
     public void testDeleteProjet() {
         Projet projet = new Projet();
         projet.setId(3); 
-        projetService.deleteProjet(projet); 
+        projetService.delete(projet); 
 
         LoggerMessage.info("Project deleted successfully.");
     }
@@ -71,27 +71,7 @@ public class ProjetServiceTest {
         projetService.updateProjet(projet); 
     }
     
-    @Test
-    public void testGetById() {
-        int projetId = 1; 
-        Projet projet = projetService.getById(projetId);
-
-        assertTrue("The projet should be retrieved successfully.", projet != null);
-        System.out.println(projet); 
-    }
-
-    @Test
-    public void testFindByName() {
-        String searchName = "New Project"; 
-        List<Projet> projets = projetService.findByName(searchName);
-        
-        assertNotNull("The list of projects should not be null.", projets);
-        assertFalse("There should be at least one project found with the given name.", projets.isEmpty());
-
-        projets.forEach(projet -> {
-            assertTrue("Each project should contain the search term in its name.", projet.getNom().contains(searchName));
-            System.out.println(projet); 
-        });
-    }
+   
+  
 
 }

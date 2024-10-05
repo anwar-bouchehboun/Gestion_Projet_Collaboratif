@@ -47,11 +47,9 @@ public class ProjetServlet extends HttpServlet {
         List<Projet> projects = projetService.getPage(page, pageSize);
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
-        	  String finalSearchQuery = searchQuery.toLowerCase();
-        	projects = projects.stream()
-        		    .filter(projet -> projet.getNom() != null && projet.getNom().toLowerCase().contains(finalSearchQuery))
-        		    .collect(Collectors.toList());
-
+            projects = projects.stream()
+                    .filter(projet -> projet.getNom().toLowerCase().contains(searchQuery.toLowerCase()))
+                    .collect(Collectors.toList());
         }
 
         int totalPages = (int) Math.ceil((double) totalProjects / pageSize);

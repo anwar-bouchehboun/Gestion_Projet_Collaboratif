@@ -126,46 +126,9 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         return projets;
     }
     
-    @Override
-    public long count() {
-        String sql = "SELECT COUNT(*) FROM projet";
-        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
-                ResultSet resultSet = statement.executeQuery()) {
-            if (resultSet.next()) {
-                return resultSet.getLong(1);
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors du comptage des projets: " + e.getMessage());
-        }
-        return 0;
-    }
 
-    @Override
-    public Projet findById(Integer id) {
-        String sql = "SELECT * FROM projet WHERE id = ?";
-        Projet projet = null;
-        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                projet = new Projet();
-                projet.setId(resultSet.getInt("id"));
-                projet.setNom(resultSet.getString("nom"));
-                projet.setDescription(resultSet.getString("description"));
-                projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
-                projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
-                projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
-                Equipe equipe = new Equipe();
-                equipe.setId(resultSet.getInt("equipe_id"));
-                projet.setEquipe(equipe);
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la recherche du projet: " + e.getMessage());
-        }
-        return projet;
-    }
-
+ 
 
     @Override
     public List<Projet> getPage(int page, int pageSize) {
@@ -222,61 +185,8 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         return 0;
     }
 
-    @Override
-    public List<Projet> findByName(String name) {
-        List<Projet> projets = new ArrayList<>();
-        String sql = "SELECT p.*, e.nom AS equipe_nom FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id WHERE p.nom LIKE ?";
-        
-        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-            statement.setString(1, "%" + name + "%"); 
-            
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Projet projet = new Projet();
-                    projet.setId(resultSet.getInt("id"));
-                    projet.setNom(resultSet.getString("nom"));
-                    projet.setDescription(resultSet.getString("description"));
-                    projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
-                    projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
-                    projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
+    
 
-                    if (resultSet.getObject("equipe_id") != null) {
-                        Equipe equipe = new Equipe();
-                        equipe.setId(resultSet.getInt("equipe_id"));
-                        equipe.setNom(resultSet.getString("equipe_nom"));
-                        projet.setEquipe(equipe);
-                    } else {
-                        projet.setEquipe(null);
-                    }
-                    
-                    projets.add(projet);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la recherche des projets par nom: " + e.getMessage());
-        }
-        
-        return projets;
-    }
-
-    public int getTacheCountByProjetId(int projetId) {
-        int tacheCount = 0;
-        String sql = "SELECT COUNT(*) AS count FROM Tache WHERE projet_id = ?";
-
-        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-            statement.setInt(1, projetId);
-            
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    tacheCount = resultSet.getInt("count");
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération du nombre de tâches pour le projet " + projetId + ": " + e.getMessage());
-        }
-
-        return tacheCount;
-    }
 
 
    
