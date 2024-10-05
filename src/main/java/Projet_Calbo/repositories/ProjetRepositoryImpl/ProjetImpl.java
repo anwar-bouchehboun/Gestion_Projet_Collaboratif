@@ -256,24 +256,7 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         return projets;
     }
 
-    public int getTacheCountByProjetId(int projetId) {
-        int tacheCount = 0;
-        String sql = "SELECT COUNT(*) AS count FROM Tache WHERE projet_id = ?";
 
-        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
-            statement.setInt(1, projetId);
-            
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    tacheCount = resultSet.getInt("count");
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération du nombre de tâches pour le projet " + projetId + ": " + e.getMessage());
-        }
-
-        return tacheCount;
-    }
 
 
    

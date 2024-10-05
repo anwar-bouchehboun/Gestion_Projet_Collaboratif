@@ -208,16 +208,17 @@
             <div class="card-header flex "><h4>Liste des Projets</h4>
             
             <div class="mb-0">
-            <form action="">
-                <div class="d-flex  flex-md-row ">
-                   <div class="col-auto me-md-2 mb-2 mb-md-0">
-                         <input type="text" class="form-control " id="" placeholder="Entre Nom Projet">
-                     </div>
-                 <div class="col-auto me-md-2">
-                 <button type="submit" class="btn btn-primary mb-3">chercher</button>
-                    </div>
-                </div>
-            </form>
+            <form action="" method="get">
+    <div class="d-flex  flex-md-row">
+        <div class="col-auto me-md-2 mb-2 mb-md-0">
+            <input type="text" name="search" class="form-control" placeholder="Entre Nom Projet">
+        </div>
+        <div class="col-auto me-md-2">
+            <button type="submit" class="btn btn-primary mb-3">chercher</button>
+        </div>
+    </div>
+</form>
+
         </div>
             </div>
             
@@ -243,8 +244,8 @@
        
 <c:forEach var="assam" items="${projets}">
     <tr>
-        <td>${assam.id}</td>
         <td>${assam.nom}</td>
+        <td>${assam.description}</td>
         <td>${assam.statut}</td>
         <td>${assam.dateDebut}</td>
         <td>${assam.dateFin}</td>
@@ -279,11 +280,12 @@
     <ul class="pagination justify-content-center mt-4">
         <c:forEach begin="1" end="${totalPages}" var="pageNum">
             <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
-                <a class="page-link" href="?page=${pageNum}">${pageNum}</a>
+                <a class="page-link" href="?page=${pageNum}&search=${searchQuery}">${pageNum}</a>
             </li>
         </c:forEach>
     </ul>
 </nav>
+
 
     </div>
 
