@@ -64,10 +64,14 @@ our](https://github.com/user-attachments/assets/52ac2332-f106-4d83-a850-e4095004
 # Projet
 <img width="418" alt="affichageProjets" src="https://github.com/user-attachments/assets/ffbd6c42-a8c4-4aaa-bfd5-e866dc26109d">
 <img width="341" alt="gestionProjets" src="https://github.com/user-attachments/assets/6eb1329b-d974-4a94-9a6f-bb3f8f074aa1">
+
 # Tache
 ![modifier_tache](https://github.com/user-attachments/assets/055d84fb-2a6e-4b27-bdf6-3e5dfe8b17dc)
 ![creation_tache](https://github.com/user-attachments/assets/b9f56f74-6f84-49dc-9562-ffad6264f94a)
 ![table_taches](https://github.com/user-attachments/assets/022101b9-c49c-486a-9ec9-0c679f4d83b6)
+
+## Planification 
+https://anouarab95.atlassian.net/jira/software/projects/GC/boards/9/backlog?epics=visible
 
 ## Améliorations futures possibles
 - Ajout de la gestion des notifications : Notifications pour les échéances de tâches et les nouvelles affectations.
