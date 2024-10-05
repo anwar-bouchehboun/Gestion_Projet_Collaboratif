@@ -31,7 +31,6 @@ public class ProjetServlet extends HttpServlet {
         int page = 1;
         int pageSize = 5;
         
-        // Get the search parameter from the request
         String searchQuery = request.getParameter("search");
 
         if (request.getParameter("page") != null) {
@@ -42,27 +41,25 @@ public class ProjetServlet extends HttpServlet {
             pageSize = Integer.parseInt(request.getParameter("pageSize"));
         }
 
-        // Retrieve all projects and apply pagination
+        int totalProjects = projetService.getTotalProjectCount();
+
         List<Projet> projects = projetService.getPage(page, pageSize);
 
-        // Filter projects by name if a search query is provided
         if (searchQuery != null && !searchQuery.isEmpty()) {
             projects = projects.stream()
                     .filter(projet -> projet.getNom().toLowerCase().contains(searchQuery.toLowerCase()))
                     .toList();
         }
 
-        // Calculate total pages based on the filtered projects
-        int totalProjects = projects.size();
         int totalPages = (int) Math.ceil((double) totalProjects / pageSize);
 
-        // Set attributes for JSP
         request.setAttribute("projets", projects);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
-        request.setAttribute("searchQuery", searchQuery); // To preserve the search query in the input field
+        request.setAttribute("searchQuery", searchQuery); 
 
-        // Forward the request to the JSP page
+        List<Equipe> equipes = equipeService.getAll();
+        request.setAttribute("equipes", equipes);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/projet.jsp");
         dispatcher.forward(request, response);
     }
