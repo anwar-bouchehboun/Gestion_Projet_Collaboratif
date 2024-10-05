@@ -32,9 +32,10 @@ public class TacheServlet extends HttpServlet {
         memberService = new MemberService();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         if (action == null) {
             action = "list";
         }
@@ -57,7 +58,8 @@ public class TacheServlet extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String action = request.getParameter("action");
 
         switch (action) {
@@ -72,59 +74,70 @@ public class TacheServlet extends HttpServlet {
         }
     }
 
-    private void listTaches(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void listTaches(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             int page = 1;
             int pageSize = 5;
-            
+
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
-            
+
             List<Tache> taches = tacheService.getTachePage(page, pageSize);
             int totalPages = tacheService.getTotalPages(pageSize);
-            
-            // Add these lines to fetch projects and members
+
             List<Projet> projets = projetService.getAllProjets();
-            List<Members> members = memberService.getAll();
-            
+            List<Members> members = memberService.getMemberPage(1, Integer.MAX_VALUE);
+
             request.setAttribute("taches", taches);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("projets", projets);
             request.setAttribute("members", members);
 
+            request.setAttribute("priorites", PrioriteEnum.values());
+            request.setAttribute("statuts", Statut.values());
+
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Une erreur s'est produite lors de la récupération des tâches: " + e.getMessage());
+            request.setAttribute("errorMessage",
+                    "Une erreur s'est produite lors de la récupération des tâches: " + e.getMessage());
         }
-        
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/tache.jsp");
         dispatcher.forward(request, response);
     }
 
-
-    private void showAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void showAddForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         List<Projet> projets = projetService.getAllProjets();
-        request.setAttribute("projets", projets);
-        request.setAttribute("members", memberService.getAll());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/tache.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Tache tache = tacheService.getTacheById(id);
-        List<Projet> projets = projetService.getAllProjets();
-        List<Members> members = memberService.getAll();
-        request.setAttribute("tache", tache);
+        List<Members> members = memberService.getMemberPage(1, Integer.MAX_VALUE);
         request.setAttribute("projets", projets);
         request.setAttribute("members", members);
+        request.setAttribute("priorites", PrioriteEnum.values());
+        request.setAttribute("statuts", Statut.values());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/tache-form.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void addTache(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Tache tache = tacheService.getTacheById(id);
+        List<Projet> projets = projetService.getAllProjets();
+        List<Members> members = memberService.getMemberPage(1, Integer.MAX_VALUE);
+        request.setAttribute("tache", tache);
+        request.setAttribute("projets", projets);
+        request.setAttribute("members", members);
+        request.setAttribute("priorites", PrioriteEnum.values());
+        request.setAttribute("statuts", Statut.values());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/tache-form.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void addTache(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String titre = request.getParameter("titre");
         String description = request.getParameter("description");
         PrioriteEnum priorite = PrioriteEnum.valueOf(request.getParameter("priorite"));
@@ -141,12 +154,19 @@ public class TacheServlet extends HttpServlet {
         membre.setId(membreId);
 
         Tache newTache = new Tache(titre, description, priorite, statut, dateCreation, dateEcheance, projet, membre);
-        tacheService.addTache(newTache);
+        boolean success = tacheService.addTache(newTache);
+
+        if (success) {
+            request.getSession().setAttribute("successMessage", "Tâche ajoutée avec succès !");
+        } else {
+            request.getSession().setAttribute("errorMessage", "Erreur lors de l'ajout de la tâche.");
+        }
 
         response.sendRedirect(request.getContextPath() + "/tache?action=list");
     }
 
-    private void updateTache(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void updateTache(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String titre = request.getParameter("titre");
         String description = request.getParameter("description");
@@ -167,13 +187,22 @@ public class TacheServlet extends HttpServlet {
         tache.setId(id);
         tacheService.updateTache(tache);
 
+        request.getSession().setAttribute("successMessage", "Tâche mise à jour avec succès !");
         response.sendRedirect(request.getContextPath() + "/tache?action=list");
     }
 
-    private void deleteTache(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void deleteTache(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Tache tache = tacheService.getTacheById(id);
-        tacheService.deleteTache(tache);
+        if (tache != null) {
+            tacheService.deleteTache(tache);
+            request.getSession().setAttribute("successMessage", "Tâche supprimée avec succès !");
+        } else {
+            request.getSession().setAttribute("errorMessage", "Tâche non trouvée.");
+        }
         response.sendRedirect(request.getContextPath() + "/tache?action=list");
     }
+
+
 }

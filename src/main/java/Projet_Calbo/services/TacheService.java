@@ -1,10 +1,7 @@
 package Projet_Calbo.services;
 
 import java.util.List;
-import java.util.Map;
 
-import Projet_Calbo.model.Members;
-import Projet_Calbo.model.Projet;
 import Projet_Calbo.model.Tache;
 import Projet_Calbo.repositories.ProjetRepositoryImpl.TacheImpl;
 
@@ -46,7 +43,7 @@ public class TacheService {
         long totalCount = tacheRepository.count();
         return (int) Math.ceil((double) totalCount / pageSize);
     }
-    public Map<Members, List<Tache>> getMembersAndTasksForProject(Projet projet) {
-        return tacheRepository.getMembersAndTasksForProject(projet);
+    public List<Tache> getTasksByMemberId(int memberId) {
+        return tacheRepository.getTasksByMemberId(memberId);
     }
 }

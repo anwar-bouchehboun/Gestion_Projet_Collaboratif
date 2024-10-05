@@ -9,6 +9,8 @@ import Projet_Calbo.utilis.LoggerMessage;
 import Projet_Calbo.model.Equipe;
 import Projet_Calbo.model.StatutProjet;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
 
 public class ProjetServiceTest {
 
@@ -51,35 +53,24 @@ public class ProjetServiceTest {
 
         LoggerMessage.info("Project deleted successfully.");
     }
-
+    
     @Test
     public void testUpdateProjet() {
         Projet projet = new Projet();
-        projet.setId(3);
-        projet.setNom("Projec 2");
-        projet.setDescription("Description ");
+        projet.setId(2); 
+        projet.setNom("Project to Update");
+        projet.setDescription("Description of the project to update");
         projet.setDateDebut(java.time.LocalDate.now());
         projet.setDateFin(java.time.LocalDate.now().plusDays(30));
-        projet.setStatut(StatutProjet.ENCOURS);
+        projet.setStatut(StatutProjet.ENCOURS); 
+
         Equipe equipe = new Equipe();
-        equipe.setId(23);
+        equipe.setId(2); 
         projet.setEquipe(equipe);
 
-        projetService.updateProjet(projet);
-
-    /*    projet.setNom("Updated Project Name");
-        projet.setDescription("Updated description of the project");
-
-        projetService.updateProjet(projet);
-
-        Projet updatedProjet = projetService.getById(projet.getId());
-
-        assertTrue("The project name should be updated.",
-                "Updated Project Name".equals(updatedProjet.getNom()));
-        assertTrue("The project description should be updated.",
-                "Updated description of the project".equals(updatedProjet.getDescription()));*/
+        projetService.updateProjet(projet); 
     }
-
+    
     @Test
     public void testGetById() {
         int projetId = 1;
@@ -87,6 +78,20 @@ public class ProjetServiceTest {
 
         assertTrue("The projet should be retrieved successfully.", projet != null);
         System.out.println(projet);
+    }
+
+    @Test
+    public void testFindByName() {
+        String searchName = "New Project"; 
+        List<Projet> projets = projetService.findByName(searchName);
+        
+        assertNotNull("The list of projects should not be null.", projets);
+        assertFalse("There should be at least one project found with the given name.", projets.isEmpty());
+
+        projets.forEach(projet -> {
+            assertTrue("Each project should contain the search term in its name.", projet.getNom().contains(searchName));
+            System.out.println(projet); 
+        });
     }
 
 }

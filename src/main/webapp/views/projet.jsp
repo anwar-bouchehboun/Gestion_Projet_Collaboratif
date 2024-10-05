@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %> <% request.setAttribute("title", "Projects");
-request.setAttribute("contentPage", "../content/project.jsp"); %>
+pageEncoding="UTF-8" %> 
 
-<jsp:include page="/views/layout/layout.jsp" />
+<% request.setAttribute("title", "Equipe");
+request.setAttribute("contentPage", "../content/projet.jsp"); %>
+
+<jsp:include page="./layout/layout.jsp" />

@@ -11,6 +11,7 @@ import Projet_Calbo.model.Equipe;
 import Projet_Calbo.repositories.GeneralInterface;
 import Projet_Calbo.repositories.MultiInterface;
 import Projet_Calbo.utilis.LoggerMessage;
+
 public class EquipeImpl implements GeneralInterface<Equipe> , MultiInterface<Equipe> {
 
 	@Override
@@ -162,6 +163,14 @@ public class EquipeImpl implements GeneralInterface<Equipe> , MultiInterface<Equ
 		}
 		
 		return count;
+	}
+
+
+
+	@Override
+	public List<Equipe> findByName(String name) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'findByName'");
 	}
 
 }
