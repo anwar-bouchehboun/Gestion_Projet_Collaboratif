@@ -78,7 +78,7 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
     @Override
     public List<Projet> getAll() {
         List<Projet> projets = new ArrayList<>();
-        String sql = "SELECT p.*, e.nom AS equipe_nom, " +
+        String sql = "SELECT *, e.nom AS equipe_nom, " +
                      "(SELECT COUNT(*) FROM Tache t WHERE t.projet_id = p.id) AS total_taches, " +
                      "(SELECT COUNT(*) FROM Membre m WHERE m.equipe_id = p.equipe_id) AS total_membres " +
                      "FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id";
@@ -188,7 +188,6 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                     projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
                     projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
                     
-                    // Set the total tasks and total members
                     projet.setTotalTaches(resultSet.getInt("total_taches"));
                     projet.setTotalMembres(resultSet.getInt("total_membres"));
 

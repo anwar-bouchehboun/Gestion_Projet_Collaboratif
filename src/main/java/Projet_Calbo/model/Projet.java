@@ -16,11 +16,9 @@ public class Projet {
     private int totalTaches; 
     private int totalMembres; 
 
-    // Default constructor
     public Projet() {
     }
 
-    // Constructor with all fields including total tasks and total members
     public Projet(String nom, String description, LocalDate dateDebut, LocalDate dateFin, 
                   StatutProjet statut, Equipe equipe, List<Tache> taches, 
                   int totalTaches, int totalMembres) {

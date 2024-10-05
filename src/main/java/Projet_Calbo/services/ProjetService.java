@@ -24,7 +24,7 @@ public class ProjetService {
         projetRepository.update(projet);
     }
 
-    public void deleteProjet(Projet projet) {
+    public void delete(Projet projet) {
         projetRepository.delete(projet);
     }
 

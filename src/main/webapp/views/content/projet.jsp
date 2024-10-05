@@ -248,8 +248,22 @@
         <td>${assam.statut}</td>
         <td>${assam.dateDebut}</td>
         <td>${assam.dateFin}</td>
-        <td>${assam.totalMembres}</td> <!-- Display count of members -->
-        <td>${assam.totalTaches}</td>  <!-- Display count of tasks -->
+        <td>${assam.totalMembres}</td> 
+        <td>${assam.totalTaches}</td>  
+        <td class="d-flex flex-row gap-1">
+                                      <button class="btn btn-icon btn-edit me-1" onclick="editTask(${assam.id})" title="Modifier">
+                                                      <i class="bi bi-pencil"></i>
+                                             </button>
+                                                     <form action="${pageContext.request.contextPath}/projet" method="post" style="display:inline;">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" value="${assam.id}">
+                <button type="submit" class="btn btn-icon btn-delete" title="Supprimer">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </form>
+
+                                  
+                                </td>
     </tr>
 </c:forEach>
 
