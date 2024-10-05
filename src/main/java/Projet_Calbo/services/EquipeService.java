@@ -33,4 +33,6 @@ public class EquipeService {
 	public long countEquipes() {
 		return equipe.count();
 	}
+	
+	
 }

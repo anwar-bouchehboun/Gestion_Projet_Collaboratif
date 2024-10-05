@@ -167,7 +167,13 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
     @Override
     public List<Projet> getPage(int page, int pageSize) {
         List<Projet> projets = new ArrayList<>();
-        String sql = "SELECT p.*, e.nom AS equipe_nom FROM Projet p LEFT JOIN Equipe e ON p.equipe_id = e.id LIMIT ? OFFSET ?";
+        String sql = "SELECT p.*, " +
+                "e.nom AS equipe_nom, " +
+                "(SELECT COUNT(*) FROM Tache t WHERE t.projet_id = p.id) AS total_taches, " +
+                "(SELECT COUNT(*) FROM Membre m WHERE m.equipe_id = p.equipe_id) AS total_membres " +
+                "FROM Projet p " +
+                "LEFT JOIN Equipe e ON p.equipe_id = e.id " +
+                "LIMIT ? OFFSET ?";
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
             statement.setInt(1, pageSize);
             statement.setInt(2, (page - 1) * pageSize);
@@ -179,14 +185,17 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
                     projet.setNom(resultSet.getString("nom"));
                     projet.setDescription(resultSet.getString("description"));
                     projet.setDateDebut(resultSet.getDate("dateDebut").toLocalDate());
-                    projet.setDateFin(
-                            resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
+                    projet.setDateFin(resultSet.getDate("dateFin") != null ? resultSet.getDate("dateFin").toLocalDate() : null);
                     projet.setStatut(StatutProjet.valueOf(resultSet.getString("statut")));
-            
+                    
+                    // Set the total tasks and total members
+                    projet.setTotalTaches(resultSet.getInt("total_taches"));
+                    projet.setTotalMembres(resultSet.getInt("total_membres"));
+
                     Equipe equipe = new Equipe();
                     equipe.setId(resultSet.getInt("equipe_id"));
                     projet.setEquipe(equipe);
-            
+                    
                     projets.add(projet);
                 }
             }
@@ -196,7 +205,21 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         return projets;
     }
 
-   
+
+    public int getTotalProjectCount() {
+        String sql = "SELECT COUNT(*) AS total FROM Projet";
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération du nombre total de projets: " + e.getMessage());
+        }
+        return 0;
+    }
+
     @Override
     public List<Projet> findByName(String name) {
         List<Projet> projets = new ArrayList<>();
@@ -234,6 +257,24 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
         return projets;
     }
 
+    public int getTacheCountByProjetId(int projetId) {
+        int tacheCount = 0;
+        String sql = "SELECT COUNT(*) AS count FROM Tache WHERE projet_id = ?";
+
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
+            statement.setInt(1, projetId);
+            
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    tacheCount = resultSet.getInt("count");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération du nombre de tâches pour le projet " + projetId + ": " + e.getMessage());
+        }
+
+        return tacheCount;
+    }
 
 
    

@@ -3,14 +3,17 @@ package Projet_Calbo.services;
 import java.util.List;
 
 import Projet_Calbo.model.Projet;
+import Projet_Calbo.model.Equipe;
 import Projet_Calbo.repositories.ProjetRepositoryImpl.ProjetImpl;
 
 public class ProjetService {
 
     private ProjetImpl projetRepository;
+    private EquipeService equipeService; 
 
     public ProjetService() {
         this.projetRepository = new ProjetImpl();
+        this.equipeService = new EquipeService(); 
     }
 
     public boolean saveProjet(Projet projet) { 
@@ -37,11 +40,23 @@ public class ProjetService {
         return projetRepository.findByName(name);
     }
 
-    public List<Projet> getProjetsPagines(int page, int pageSize) {
+    public List<Projet> getPage(int page, int pageSize) {
         return projetRepository.getPage(page, pageSize);
     }
     
     public long getNombreTotalProjets() {
         return projetRepository.count();
     }
+    
+    public List<Equipe> getAllEquipes() {
+        return equipeService.getAll();
+    }
+    
+    public int getTotalProjectCount() {
+        return projetRepository.getTotalProjectCount();
+        
+
+    }
+    
+
 }

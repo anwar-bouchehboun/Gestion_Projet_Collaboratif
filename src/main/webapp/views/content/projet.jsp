@@ -241,18 +241,20 @@
                         </thead>
 <tbody>
        
-        <c:forEach var='assam' items="${projets}">
-     
-      <tr>
-                    <td>${assam.id}</td>
-                    <td>${assam.nom}</td>
-                    <td>${assam.statut}</td>
-                    <td>${assam.dateDebut}</td>
-                    <td>${assam.dateFin}</td>
-                    
-                </tr>
-      </c:forEach>
-        </tbody>
+<c:forEach var="assam" items="${projets}">
+    <tr>
+        <td>${assam.id}</td>
+        <td>${assam.nom}</td>
+        <td>${assam.statut}</td>
+        <td>${assam.dateDebut}</td>
+        <td>${assam.dateFin}</td>
+        <td>${assam.totalMembres}</td> <!-- Display count of members -->
+        <td>${assam.totalTaches}</td>  <!-- Display count of tasks -->
+    </tr>
+</c:forEach>
+
+
+        </tbody>	
                     </table>
                 </div>
             </div>
@@ -260,12 +262,15 @@
 
         <!-- Pagination -->
         <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center mt-4">
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-            </ul>
-        </nav>
+    <ul class="pagination justify-content-center mt-4">
+        <c:forEach begin="1" end="${totalPages}" var="pageNum">
+            <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
+                <a class="page-link" href="?page=${pageNum}">${pageNum}</a>
+            </li>
+        </c:forEach>
+    </ul>
+</nav>
+
     </div>
 
     <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
@@ -276,48 +281,51 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="Projetform">
-                            <div class="mb-4">
-                                <label for="Nom" class="form-label">Nom</label>
-                                <input type="text" class="form-control" name="nom" id="Nom" required />
-                            </div>
-                    <div class="mb-4">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" id="description" required></textarea>
-                    </div>
-                            <div class="mb-4">
-                                <label for="equipe" class="form-label">équipe</label>
-                                <select class="form-select" id="Role" name="role" required>
-                                    <option value="">Sélectionner une équipe</option>
-                                    <option value="">fvfvf</option>
-                                    <option value="">fdfd</option>
-                                    <option value="">aaaaa</option>
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label for="statut" class="form-label">Statut</label>
-                                <select class="form-select" id="statut" name="statut" required>
-                                    <option value="">Sélectionner un statut</option>
-                                    <option value="">En cours</option>
-                                    <option value="">Terminée</option>
-                                    <option value="">Annulé</option>
-                                </select>
-                            </div>
-                            
-                            <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="Nom" class="form-label">Date de création</label>
-                                <input type="date" class="form-control" name="nom" id="Nom" required />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="Prenom" class="form-label">Date D'échance</label>
-                                <input type="date" class="form-control" name="prenom" id="Prenom" required />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="saveTask()">Enregistrer</button>
-                        </div>
-                    </form>
+                   <form id="Projetform" action="${pageContext.request.contextPath}/projet" method="post">
+    <div class="mb-4">
+        <label for="Nom" class="form-label">Nom</label>
+        <input type="text" class="form-control" name="nom" id="Nom" required />
+    </div>
+    <div class="mb-4">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" name="description" id="description" required></textarea>
+    </div>
+    <div class="mb-4">
+        <label for="equipe" class="form-label">Équipe</label>
+        <select class="form-select" id="equipe" name="equipe" required>
+            <option value="">Sélectionner une équipe</option>
+            <c:forEach var="equipe" items="${equipes}">
+                <option value="${equipe.id}">${equipe.nom}</option>
+            </c:forEach>
+        </select>
+    </div>
+    <div class="mb-4">
+        <label for="statut" class="form-label">Statut</label>
+        <select class="form-select" id="statut" name="statut" required>
+            <option value="">Sélectionner un statut</option>
+            <option value="ENPREPARATION">En préparation</option>
+            <option value="ENCOURS">En cours</option>
+            <option value="ENPAUSE">En pause</option>
+            <option value="TERMINE">Terminé</option>
+            <option value="ANNULE">Annulé</option>
+            
+        </select>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="dateDebut" class="form-label">Date de création</label>
+            <input type="date" class="form-control" name="dateDebut" id="dateDebut" required />
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="dateFin" class="form-label">Date d'échéance</label>
+            <input type="date" class="form-control" name="dateFin" id="dateFin" required />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+</form>
+
                 </div>
             </div>
         </div>

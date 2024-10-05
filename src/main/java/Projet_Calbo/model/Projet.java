@@ -13,11 +13,17 @@ public class Projet {
     private StatutProjet statut;
     private Equipe equipe;
     private List<Tache> taches;    
-    
+    private int totalTaches; 
+    private int totalMembres; 
+
+    // Default constructor
     public Projet() {
     }
 
-    public Projet(String nom, String description, LocalDate dateDebut, LocalDate dateFin, StatutProjet statut, Equipe equipe, List<Tache> taches) {
+    // Constructor with all fields including total tasks and total members
+    public Projet(String nom, String description, LocalDate dateDebut, LocalDate dateFin, 
+                  StatutProjet statut, Equipe equipe, List<Tache> taches, 
+                  int totalTaches, int totalMembres) {
         this.nom = nom;
         this.description = description;
         this.dateDebut = dateDebut;
@@ -25,8 +31,11 @@ public class Projet {
         this.statut = statut;
         this.equipe = equipe;
         this.taches = taches;
+        this.totalTaches = totalTaches;
+        this.totalMembres = totalMembres;
     }
 
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -82,7 +91,7 @@ public class Projet {
     public void setEquipe(Equipe equipe) {
         this.equipe = equipe;
     }
-    
+
     public List<Tache> getTaches() {
         return taches;
     }
@@ -90,7 +99,30 @@ public class Projet {
     public void setTaches(List<Tache> taches) {
         this.taches = taches;
     }
-    
+
+    public int getMemberCount() {
+        if (equipe != null && equipe.getMembers() != null) {
+            return equipe.getMembers().size();
+        }
+        return 0;
+    }
+
+    public int getTotalTaches() {
+        return totalTaches;
+    }
+
+    public void setTotalTaches(int totalTaches) {
+        this.totalTaches = totalTaches;
+    }
+
+    public int getTotalMembres() {
+        return totalMembres;
+    }
+
+    public void setTotalMembres(int totalMembres) {
+        this.totalMembres = totalMembres;
+    }
+
     @Override
     public String toString() {
         return "Projet{" +
@@ -101,6 +133,8 @@ public class Projet {
                 ", dateFin=" + dateFin +
                 ", statut=" + statut +
                 ", equipe=" + equipe +
+                ", totalTaches=" + totalTaches +
+                ", totalMembres=" + totalMembres +
                 '}';
     }
 }
