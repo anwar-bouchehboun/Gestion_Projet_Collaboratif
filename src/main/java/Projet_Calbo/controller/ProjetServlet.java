@@ -78,7 +78,38 @@ public class ProjetServlet extends HttpServlet {
             projetService.delete(projet); 
 
             response.sendRedirect(request.getContextPath() + "/projet"); 
-        } else {
+        } 
+        else if("edit".equals(action)) { 
+        	
+            int projectId = Integer.parseInt(request.getParameter("id"));
+            String nom = request.getParameter("nom");
+            String description = request.getParameter("description");
+            int equipeId = Integer.parseInt(request.getParameter("equipe"));
+            String statut = request.getParameter("statut");
+            LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut"));
+            LocalDate dateFin = LocalDate.parse(request.getParameter("dateFin"));
+               
+            Projet projet = new Projet();
+            projet.setId(projectId);
+            projet.setNom(nom);
+            projet.setDescription(description);
+            
+            Equipe equipe = new Equipe();
+            equipe.setId(equipeId); 
+            projet.setEquipe(equipe); 
+
+            projet.setStatut(StatutProjet.valueOf(statut));
+            projet.setDateDebut(dateDebut);
+            projet.setDateFin(dateFin);
+           
+            projetService.updateProjet(projet);
+
+            response.sendRedirect(request.getContextPath() + "/projet"); 
+            
+        } 
+        
+        
+        else {
             String nom = request.getParameter("nom");
             String description = request.getParameter("description");
             int equipeId = Integer.parseInt(request.getParameter("equipe"));

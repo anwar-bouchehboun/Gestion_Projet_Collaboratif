@@ -200,7 +200,7 @@
 
         <div class="text-end mb-3">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
-                <i class="bi bi-plus-circle"></i> Créer un nouveau Projet
+                <i class="bi bi-plus-circle"></i> Crï¿½er un nouveau Projet
             </button>
         </div>
 
@@ -233,8 +233,8 @@
                                 <th scope="col">Nom</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Statut</th>
-                                <th scope="col">Date de création</th>
-                                <th scope="col">Date d'échance</th>
+                                <th scope="col">Date de crï¿½ation</th>
+                                <th scope="col">Date d'ï¿½chance</th>
                                 <th scope="col">Membres</th>
                                 <th scope="col">Taches</th>                                
                                 <th scope="col">Actions</th>
@@ -252,9 +252,11 @@
         <td>${assam.totalMembres}</td> 
         <td>${assam.totalTaches}</td>  
         <td class="d-flex flex-row gap-1">
-                                      <button class="btn btn-icon btn-edit me-1" onclick="editTask(${assam.id})" title="Modifier">
-                                                      <i class="bi bi-pencil"></i>
-                                             </button>
+                                    <button id="editButton" class="btn btn-icon btn-edit me-1" data-bs-toggle="modal" data-bs-target="#UpdateModal"
+    onclick="editTask('${assam.id}','${assam.nom}','${assam.description}','${assam.statut}','${assam.dateDebut}','${assam.dateFin}','${assam.equipe.id}')"
+    title="Modifier">
+    <i class="bi bi-pencil"></i>
+</button>
                                                      <form action="${pageContext.request.contextPath}/projet" method="post" style="display:inline;">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="id" value="${assam.id}">
@@ -293,7 +295,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Créer/Modifier un Projet</h5>
+                    <h5 class="modal-title" id="taskModalLabel">Crï¿½er un Projet</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -307,33 +309,34 @@
         <textarea class="form-control" name="description" id="description" required></textarea>
     </div>
     <div class="mb-4">
-        <label for="equipe" class="form-label">Équipe</label>
+        <label for="equipe" class="form-label">ï¿½quipe</label>
         <select class="form-select" id="equipe" name="equipe" required>
-            <option value="">Sélectionner une équipe</option>
+            <option value="">Sï¿½lectionner une ï¿½quipe</option>
             <c:forEach var="equipe" items="${equipes}">
                 <option value="${equipe.id}">${equipe.nom}</option>
             </c:forEach>
         </select>
     </div>
+    
     <div class="mb-4">
         <label for="statut" class="form-label">Statut</label>
         <select class="form-select" id="statut" name="statut" required>
-            <option value="">Sélectionner un statut</option>
-            <option value="ENPREPARATION">En préparation</option>
+            <option value="">Sï¿½lectionner un statut</option>
+            <option value="ENPREPARATION">En prï¿½paration</option>
             <option value="ENCOURS">En cours</option>
             <option value="ENPAUSE">En pause</option>
-            <option value="TERMINE">Terminé</option>
-            <option value="ANNULE">Annulé</option>
+            <option value="TERMINE">Terminï¿½</option>
+            <option value="ANNULE">Annulï¿½</option>
             
         </select>
     </div>
     <div class="row">
         <div class="col-md-6 mb-3">
-            <label for="dateDebut" class="form-label">Date de création</label>
+            <label for="dateDebut" class="form-label">Date de crï¿½ation</label>
             <input type="date" class="form-control" name="dateDebut" id="dateDebut" required />
         </div>
         <div class="col-md-6 mb-3">
-            <label for="dateFin" class="form-label">Date d'échéance</label>
+            <label for="dateFin" class="form-label">Date d'ï¿½chï¿½ance</label>
             <input type="date" class="form-control" name="dateFin" id="dateFin" required />
         </div>
     </div>
@@ -342,10 +345,76 @@
     </div>
 </form>
 
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
+<!-- // update form  -->
+<!-- Update Project Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Modifier le Projet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="UpdateProjetForm" action="${pageContext.request.contextPath}/projet" method="post">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" name="id" id="projectId" value="">
+                    
+                    <div class="mb-4">
+                        <label for="updateNom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" name="nom" id="updateNom" required />
+                    </div>
+                    <div class="mb-4">
+                        <label for="updateDescription" class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="updateDescription" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="updateEquipe" class="form-label">Équipe</label>
+                        <select class="form-select" id="updateEquipe" name="equipe" required>
+                            <option value="">Sélectionner une équipe</option>
+                            <c:forEach var="equipe" items="${equipes}">
+                                <option value="${equipe.id}">${equipe.nom}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="updateStatut" class="form-label">Statut</label>
+                        <select class="form-select" id="updateStatut" name="statut" required>
+                            <option value="">Sélectionner un statut</option>
+                            <option value="ENPREPARATION">En préparation</option>
+                            <option value="ENCOURS">En cours</option>
+                            <option value="ENPAUSE">En pause</option>
+                            <option value="TERMINE">Terminé</option>
+                            <option value="ANNULE">Annulé</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="updateDateDebut" class="form-label">Date de création</label>
+                            <input type="date" class="form-control" name="dateDebut" id="updateDateDebut" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="updateDateFin" class="form-label">Date d'échéance</label>
+                            <input type="date" class="form-control" name="dateFin" id="updateDateFin" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -355,7 +424,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Êtes-vous sûr de vouloir supprimer ce Projet ?
+                    ï¿½tes-vous sï¿½r de vouloir supprimer ce Projet ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -365,4 +434,20 @@
         </div>
     </div>
 
-  
+<script>
+function editTask(id, nom, description, statut, dateDebut, dateFin, equipeId) {
+
+    
+    document.getElementById('projectId').value = id;  
+    document.getElementById('updateNom').value = nom;    
+    document.getElementById('updateDescription').value = description;
+    document.getElementById('updateStatut').value = statut;
+    document.getElementById('updateDateDebut').value = dateDebut;   
+    document.getElementById('updateDateFin').value = dateFin;        
+    document.getElementById('updateEquipe').value = equipeId; 
+
+    var updateModal = new bootstrap.Modal(document.getElementById('updateModal'));
+    updateModal.show();
+}
+
+</script>

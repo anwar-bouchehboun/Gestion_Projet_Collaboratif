@@ -21,6 +21,8 @@ public class ProjetService {
     }
 
     public void updateProjet(Projet projet) {
+    	System.out.println(projet);
+
         projetRepository.update(projet);
     }
 

@@ -37,7 +37,10 @@ public class ProjetImpl implements GeneralInterface<Projet> , MultiInterface<Pro
 
     @Override
     public void update(Projet entity) {
+    	System.out.println(entity);
+
         String sql = "UPDATE Projet SET nom = ?, description = ?, dateDebut = ?, dateFin = ?, statut = ?, equipe_id = ? WHERE id = ?";
+        
         try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(sql)) {
             statement.setString(1, entity.getNom());
             statement.setString(2, entity.getDescription());
