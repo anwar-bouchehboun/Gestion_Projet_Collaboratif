@@ -200,4 +200,10 @@ public class MemberImp implements GeneralInterface<Members>, MultiInterface<Memb
 		}
 		return 0;
 	}
+
+	@Override
+	public List<Members> findByName(String name) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'findByName'");
+	}
 }

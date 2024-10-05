@@ -200,7 +200,7 @@
 
         <div class="text-end mb-3">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
-                <i class="bi bi-plus-circle"></i> Crï¿½er un nouveau Projet
+                <i class="bi bi-plus-circle"></i> Creer un nouveau Projet
             </button>
         </div>
 
@@ -295,7 +295,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Crï¿½er un Projet</h5>
+                    <h5 class="modal-title" id="taskModalLabel">Creer un Projet</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -332,11 +332,11 @@
     </div>
     <div class="row">
         <div class="col-md-6 mb-3">
-            <label for="dateDebut" class="form-label">Date de crï¿½ation</label>
+            <label for="dateDebut" class="form-label">Date de creation</label>
             <input type="date" class="form-control" name="dateDebut" id="dateDebut" required />
         </div>
         <div class="col-md-6 mb-3">
-            <label for="dateFin" class="form-label">Date d'ï¿½chï¿½ance</label>
+            <label for="dateFin" class="form-label">Date d'echeance</label>
             <input type="date" class="form-control" name="dateFin" id="dateFin" required />
         </div>
     </div>
@@ -397,11 +397,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="updateDateDebut" class="form-label">Date de création</label>
+                            <label for="updateDateDebut" class="form-label">Date de creation</label>
                             <input type="date" class="form-control" name="dateDebut" id="updateDateDebut" required />
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="updateDateFin" class="form-label">Date d'échéance</label>
+                            <label for="updateDateFin" class="form-label">Date d'echeance</label>
                             <input type="date" class="form-control" name="dateFin" id="updateDateFin" required />
                         </div>
                     </div>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Projet_Calbo.model.Equipe;
 import Projet_Calbo.services.EquipeService;
+import Projet_Calbo.utilis.InputValidateur;
 
 public class EquipeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -116,7 +117,6 @@ public class EquipeServlet extends HttpServlet {
 
         if (equipe != null) {
             request.setAttribute("equipe", equipe);
-            // Add this line for debugging
             System.out.println("Editing equipe: " + equipe.getId() + " - " + equipe.getNom());
             RequestDispatcher dispatcher = request.getRequestDispatcher("/views/equipe.jsp");
             dispatcher.forward(request, response);
@@ -129,6 +129,13 @@ public class EquipeServlet extends HttpServlet {
     private void addTeam(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String teamName = request.getParameter("teamName");
+        
+        if (!InputValidateur.validateTeamName(teamName)) {
+            setErrorMessage(request, "Nom de l'équipe invalide. Il doit contenir au moins 3 caractères.");
+            response.sendRedirect(request.getContextPath() + "/equipe?action=list");
+
+            return;
+        }
         Equipe newEquipe = new Equipe();
         newEquipe.setNom(teamName);
         equipeService.saveEquipe(newEquipe);
@@ -140,7 +147,11 @@ public class EquipeServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String newName = request.getParameter("newName");
-        // Add these lines for debugging
+        if (!InputValidateur.validateTeamName(newName)) {
+            setErrorMessage(request, "Données invalides. Veuillez vérifier les informations fournies.");
+            response.sendRedirect(request.getContextPath() + "/equipe?action=list");
+            return;
+        }
         System.out.println("Updating equipe - ID: " + id + ", New Name: " + newName);
 
         List<Equipe> equipes = equipeService.getAll();
@@ -161,6 +172,12 @@ public class EquipeServlet extends HttpServlet {
 
     private void deleteTeam(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+     
+        if (!InputValidateur.validateId(request.getParameter("id"))) {
+            setErrorMessage(request, "ID d'équipe invalide.");
+            response.sendRedirect(request.getContextPath() + "/equipe?action=list");
+            return;
+        }
         int id = Integer.parseInt(request.getParameter("id"));
         System.out.println(id);
 

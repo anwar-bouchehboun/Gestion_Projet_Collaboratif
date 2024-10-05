@@ -223,4 +223,10 @@ public class TacheImpl implements GeneralInterface<Tache>, MultiInterface<Tache>
         }
         return tasks;
     }
+
+    @Override
+    public List<Tache> findByName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByName'");
+    }
 }

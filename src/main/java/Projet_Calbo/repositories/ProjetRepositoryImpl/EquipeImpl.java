@@ -164,4 +164,12 @@ public class EquipeImpl implements GeneralInterface<Equipe> , MultiInterface<Equ
 		return count;
 	}
 
+
+
+	@Override
+	public List<Equipe> findByName(String name) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'findByName'");
+	}
+
 }

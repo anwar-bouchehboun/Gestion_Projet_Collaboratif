@@ -3,6 +3,7 @@ package Projet_Calbo.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,9 +47,11 @@ public class ProjetServlet extends HttpServlet {
         List<Projet> projects = projetService.getPage(page, pageSize);
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
-            projects = projects.stream()
-                    .filter(projet -> projet.getNom().toLowerCase().contains(searchQuery.toLowerCase()))
-                    .toList();
+        	  String finalSearchQuery = searchQuery.toLowerCase();
+        	projects = projects.stream()
+        		    .filter(projet -> projet.getNom() != null && projet.getNom().toLowerCase().contains(finalSearchQuery))
+        		    .collect(Collectors.toList());
+
         }
 
         int totalPages = (int) Math.ceil((double) totalProjects / pageSize);

@@ -14,6 +14,7 @@ import Projet_Calbo.model.Members;
 import Projet_Calbo.model.Role;
 import Projet_Calbo.services.EquipeService;
 import Projet_Calbo.services.MemberService;
+import Projet_Calbo.utilis.InputValidateur;
 
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -130,6 +131,7 @@ public class MemberServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		Role role = Role.valueOf(request.getParameter("role"));
 		int equipeId = Integer.parseInt(request.getParameter("equipeId"));
+
 
 		Members member = new Members();
 		member.setNom(nom);
